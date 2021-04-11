@@ -1,6 +1,5 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Iterator;
 
 public class cascadeActionListener implements ActionListener {
     private App a;
@@ -10,11 +9,6 @@ public class cascadeActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        for(int i = a.list_ff.size()-1; i >= 0; i--){
-            if(a.list_ff.get(i).isVisible() == false){
-                a.list_ff.remove(i);
-            }
-        }
         int x = a.topPanel.getX();
         int y = a.topPanel.getY();
         for(int i = 0; i < a.list_ff.size(); i++){
