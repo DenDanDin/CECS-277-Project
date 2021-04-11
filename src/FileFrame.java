@@ -5,11 +5,12 @@ import javax.swing.event.InternalFrameEvent;
 import java.awt.*;
 
 public class FileFrame extends JInternalFrame {
-
+    App a;
     JSplitPane splitpane;
-    public FileFrame(){
+    public FileFrame(App a){
+        this.a = a;
         this.setLayout(new BorderLayout());
-        splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new DirPanel(), new FilePanel());
+        splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new DirPanel(a), new FilePanel());
         splitpane.setSize(600,400);
 
         this.getContentPane().add(splitpane);

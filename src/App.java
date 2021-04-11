@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -9,10 +10,11 @@ public class App extends JFrame{
     JPanel panel, topPanel;
     JMenuBar menubar;
     JToolBar toolbar, drivebar, statusbar;
-    JDesktopPane desktop;
+    JDesktopPane desktopPane;
+    Desktop desktop;
+    File[] files;
     ArrayList<FileFrame> list_ff;
-    //FileManagerFrame myf, myf2;
-    JButton simple, details, ok, cancel;
+    JButton simple, details;
     String currentDrive;
 
     /**
@@ -25,7 +27,7 @@ public class App extends JFrame{
         toolbar = new JToolBar();
         drivebar = new JToolBar();
         statusbar = new JToolBar();
-        desktop = new JDesktopPane();
+        desktopPane = new JDesktopPane();
         list_ff = new ArrayList<FileFrame>();
 
         simple = new JButton("Simple");
@@ -33,6 +35,9 @@ public class App extends JFrame{
 
         details = new JButton("Details");
         details.addActionListener(new detailsActionListener());
+
+        files = (new File("C:\\")).listFiles();
+        desktop = Desktop.getDesktop();
     }
 
     /**
@@ -56,13 +61,13 @@ public class App extends JFrame{
         buildStatusbar();
         panel.add(statusbar, BorderLayout.SOUTH);
 
-        panel.add(desktop, BorderLayout.CENTER);
+        panel.add(desktopPane, BorderLayout.CENTER);
         currentDrive = "C:";
-        FileFrame ff = new FileFrame();
+        FileFrame ff = new FileFrame(this);
         ff.setTitle(currentDrive);
-        ff.setLocation(desktop.getX(), desktop.getY()+100);
+        ff.setLocation(desktopPane.getX(), desktopPane.getY()+100);
         list_ff.add(ff);
-        desktop.add(list_ff.get(0));
+        desktopPane.add(list_ff.get(0));
 
         this.add(panel);
         this.setSize(1000, 800);

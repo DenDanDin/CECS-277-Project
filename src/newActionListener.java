@@ -9,10 +9,10 @@ public class newActionListener implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        FileFrame ff = new FileFrame();
+        FileFrame ff = new FileFrame(a);
         ff.setTitle(a.currentDrive);
-        ff.setLocation(a.desktop.getX(), a.desktop.getY()+100);
+        ff.setLocation(a.desktopPane.getX(), a.desktopPane.getY()+100);
         a.list_ff.add(ff);
-        a.desktop.add(ff);
+        a.desktopPane.add(ff);
     }
 }
