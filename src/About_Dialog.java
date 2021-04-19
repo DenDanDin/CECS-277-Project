@@ -1,7 +1,7 @@
 
 /**
- *
- * @author Daniel
+ *  Dialog Box for the About button.
+ * @author Daniel De Guzman and Andy Wong
  */
 public class About_Dialog extends javax.swing.JDialog {
 

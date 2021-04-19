@@ -1,6 +1,6 @@
 /**
  *  Dialog for Help Function in File Menu.
- * @author Daniel De Guzman, #026051049
+ * @author Daniel De Guzman and Andy Wong
  */
 public class Help_Dialog extends javax.swing.JDialog {
 
