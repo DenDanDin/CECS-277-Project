@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 
@@ -40,7 +41,7 @@ public class App extends JFrame{
      */
     public void go(){
         this.setTitle("CECS 277 File Manager");
-
+        currentDrive = "C:";
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.WHITE);
         topPanel.setLayout(new BorderLayout());
@@ -57,7 +58,7 @@ public class App extends JFrame{
         panel.add(statusbar, BorderLayout.SOUTH);
 
         panel.add(desktop, BorderLayout.CENTER);
-        currentDrive = "C:";
+
         FileFrame ff = new FileFrame();
         ff.setTitle(currentDrive);
         ff.setLocation(desktop.getX(), desktop.getY()+100);
@@ -149,8 +150,12 @@ public class App extends JFrame{
     public void buildToolbar(){
         toolbar.setLayout(new FlowLayout());
         toolbar.setFloatable(false);
-        String[] a = new String[]{"hello", "my", "name"};
-        JComboBox combo = new JComboBox(a);
+        File[] paths = File.listRoots();
+        String[] pathnames = new String[paths.length];
+        for(int i = 0; i < pathnames.length; i++){
+            pathnames[i] = paths[i].getAbsolutePath();
+        }
+        JComboBox combo = new JComboBox(pathnames);
         toolbar.add(combo);
 
         Dimension dim = new Dimension(120,30);
