@@ -40,11 +40,9 @@ public class DirPanel extends JPanel{
         for(int i = 0; i < files.length; i++){
             MyFileNode myfilenode = new MyFileNode(files[i].getAbsolutePath());
             DefaultMutableTreeNode subnode = new DefaultMutableTreeNode(myfilenode);
-            if(myfilenode.isDirectory()){
-                DefaultMutableTreeNode temp = new DefaultMutableTreeNode("Temp");   //Temp bc we don't want to read the whole drive yet.
-                subnode.add(temp);                                                          // When we select the node, update it's children with files.
+            if(myfilenode.isDirectory()){   //only add the directories.
+                root.add(subnode);
             }
-            root.add(subnode);
         }
         dirtree.setModel(treemodel);
     }
