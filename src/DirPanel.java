@@ -25,6 +25,7 @@ public class DirPanel extends JPanel{
     public DirPanel(){
         this.setLayout(new BorderLayout());
         buildDirTree();
+        dirtree.addTreeExpansionListener(new MyTreeExpansionListener());
         scrollpane.setViewportView(dirtree);
         scrollpane.setSize(this.getSize());
         this.add(scrollpane, BorderLayout.CENTER);
@@ -46,5 +47,33 @@ public class DirPanel extends JPanel{
             root.add(subnode);
         }
         dirtree.setModel(treemodel);
+    }
+
+//    public void addChildren(MyFileNode mfn, DefaultMutableTreeNode root){
+//        File[] files = mfn.getFile().listFiles();
+//        for(int i = 0; i < files.length; i++){
+//            MyFileNode myfilenode = new MyFileNode(files[i].getAbsolutePath());
+//            DefaultMutableTreeNode subnode = new DefaultMutableTreeNode(myfilenode);
+//            if(myfilenode.isDirectory()){
+//                DefaultMutableTreeNode temp = new DefaultMutableTreeNode("Temp");   //Temp bc we don't want to read the whole drive yet.
+//                subnode.add(temp);                                                          // When we select the node, update it's children with files.
+//            }
+//            root.add(subnode);
+//        }
+//    }
+
+    class MyTreeExpansionListener implements TreeExpansionListener{
+
+        @Override
+        public void treeExpanded(TreeExpansionEvent event) {
+            TreePath e = event.getPath();
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getLastPathComponent();
+            System.out.println("Tree has been expanded : " + node.toString());
+        }
+
+        @Override
+        public void treeCollapsed(TreeExpansionEvent event) {
+            System.out.println("Tree has been collapsed");
+        }
     }
 }
