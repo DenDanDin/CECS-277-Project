@@ -59,7 +59,7 @@ public class App extends JFrame{
 
         panel.add(desktop, BorderLayout.CENTER);
 
-        FileFrame ff = new FileFrame();
+        FileFrame ff = new FileFrame(this);
         ff.setTitle(currentDrive);
         ff.setLocation(desktop.getX(), desktop.getY()+100);
         list_ff.add(ff);

@@ -13,9 +13,11 @@ public class FileFrame extends JInternalFrame {
      * Creates a splitplane where the left side will be
      * the Directory Panel, and the right side will be the File Panel.
      */
-    public FileFrame(){
+    public FileFrame(App a){
         this.setLayout(new BorderLayout());
-        splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, new DirPanel(), new FilePanel());
+        DirPanel left = new DirPanel(a);
+        FilePanel right = new FilePanel(left);
+        splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, right);
         splitpane.setSize(600,400);
         this.getContentPane().add(splitpane);
         this.setClosable(true);
