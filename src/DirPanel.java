@@ -19,72 +19,80 @@ public class DirPanel extends JPanel{
     public DirPanel(){
         this.setLayout(new BorderLayout());
         buildDirTree();
-        dirtree.addTreeExpansionListener(new MyTreeExpansionListener());
-        dirtree.addTreeWillExpandListener(new MyTreeExpansionListener());
+        dirtree.addTreeSelectionListener(new MyTreeListener());
+        dirtree.addTreeWillExpandListener(new MyTreeListener());
         scrollpane.setViewportView(dirtree);
         scrollpane.setSize(this.getSize());
         this.add(scrollpane, BorderLayout.CENTER);
     }
 
+    /**
+     * Builds the Directory Tree.
+     */
     public void buildDirTree(){
-        File drive = new File("C:\\");
-        File[] files = drive.listFiles();
-        DefaultMutableTreeNode root = new DefaultMutableTreeNode(drive.getAbsolutePath());
+        MyFileNode drive = new MyFileNode("C:\\");
+        File[] files = drive.getFile().listFiles();
+        DefaultMutableTreeNode root = new DefaultMutableTreeNode(drive);
         DefaultTreeModel treemodel = new DefaultTreeModel(root);
 
-        for(int i = 0; i < files.length; i++){
-            MyFileNode myfilenode = new MyFileNode(files[i].getAbsolutePath());
-            DefaultMutableTreeNode subnode = new DefaultMutableTreeNode(myfilenode);
-            if(myfilenode.isDirectory()){   //only add the directories.
-                subnode.add(new DefaultMutableTreeNode("Temp"));    //temp directory.
-                root.add(subnode);
-            }
-        }
+        lookLevelDown(root);
+        addChildren(root);
         dirtree.setModel(treemodel);
     }
 
-    public void addChildren(MyFileNode mfn, DefaultMutableTreeNode root){
-        File[] files = mfn.getFile().listFiles();
-        for(int i = 0; i < files.length; i++){
-            MyFileNode myfilenode = new MyFileNode(files[i].getAbsolutePath());
-            DefaultMutableTreeNode subnode = new DefaultMutableTreeNode(myfilenode);
-            if(myfilenode.isDirectory()){
-                DefaultMutableTreeNode temp = new DefaultMutableTreeNode("Temp");   //Temp bc we don't want to read the whole drive yet.
-                subnode.add(temp);                                                          // When we select the node, update it's children with files.
+    /**
+     * Checks if parent has a subdirectory. Adds a temporary child
+     * if it does.
+     * @param parent - the node to check.
+     */
+    public void lookLevelDown(DefaultMutableTreeNode parent){
+        MyFileNode mfn = (MyFileNode) parent.getUserObject();
+        if(mfn.isDirectory()){
+            if(mfn.hasSubDirectory()){
+                DefaultMutableTreeNode temp = new DefaultMutableTreeNode("Temp");
+                parent.add(temp);
             }
-            root.add(subnode);
         }
     }
 
-    class MyTreeExpansionListener implements TreeExpansionListener, TreeWillExpandListener {
-
-        @Override
-        public void treeExpanded(TreeExpansionEvent event) {
-            TreePath e = event.getPath();
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getLastPathComponent();
-            System.out.println("Tree has been expanded : " + node.toString());
+    /**
+     * Adds the children of the parent (only directories).
+     * @param parent - the parent to add children to.
+     */
+    public void addChildren(DefaultMutableTreeNode parent){
+        MyFileNode mfn = (MyFileNode) parent.getUserObject();
+        File[] files = mfn.getFile().listFiles();
+        if(parent.getChildCount() == 1 && parent.getChildAt(0).toString().equals("Temp")){ // if temp value.
+            parent.remove(0);
         }
-
-        @Override
-        public void treeCollapsed(TreeExpansionEvent event) {
-            System.out.println("Tree has been collapsed");
+        for(int i = 0; i < files.length; i++){
+            MyFileNode mfnChild = new MyFileNode(files[i].getAbsolutePath());
+            if(mfnChild.isDirectory()){
+                DefaultMutableTreeNode node = new DefaultMutableTreeNode(mfnChild);
+                lookLevelDown(node);
+                parent.add(node);
+            }
         }
+    }
+
+    class MyTreeListener implements TreeSelectionListener, TreeWillExpandListener {
 
         @Override
         public void treeWillExpand(TreeExpansionEvent event) {
             TreePath e = event.getPath();
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getLastPathComponent();
-            if(node.getChildCount() == 1 && node.getChildAt(0).toString().equals("Temp")){
-                System.out.println("Removed Temp Node");
-                node.remove(0);
-            }
-            node.add(new DefaultMutableTreeNode("Temp2 Node"));
-            System.out.println("Added Temp2 Node");
+            addChildren(node);
         }
 
         @Override
         public void treeWillCollapse(TreeExpansionEvent event) throws ExpandVetoException {
+        }
 
+        @Override
+        public void valueChanged(TreeSelectionEvent e) {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) dirtree.getLastSelectedPathComponent();
+            MyFileNode mfn = (MyFileNode) node.getUserObject();
+            System.out.println(mfn.toString() + "; isDirectory(): " + mfn.isDirectory() + "; isSub(): " + mfn.hasSubDirectory() + "; Class: " + mfn.getClass());
         }
     }
 }
