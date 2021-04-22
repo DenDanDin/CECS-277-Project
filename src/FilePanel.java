@@ -22,8 +22,10 @@ public class FilePanel extends JPanel {
         scrollpane.setSize(this.getSize());
         this.add(scrollpane, BorderLayout.CENTER);
     }
-    /*
+    /**
      *  Method to list files.  Iterates through files and adds to DefaultListModel for display.
+     *
+     * @param node - the node to get files from.
      */
     public void showFiles(DefaultMutableTreeNode node){
         MyFileNode mfn = (MyFileNode) node.getUserObject();
