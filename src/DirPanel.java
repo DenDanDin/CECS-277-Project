@@ -13,18 +13,16 @@ import java.util.ArrayList;
  * JPanel for the Directory Window.
  */
 public class DirPanel extends JPanel{
-    private JScrollPane scrollpane = new JScrollPane();
-    private JTree dirtree = new JTree();
+    JScrollPane scrollpane = new JScrollPane();
+    JTree dirtree = new JTree();
     MyFileNode nodeSelected;
 
     /**
      * Adds a scrollpane and a JTree to the directory window.
      */
-    public DirPanel(App a){
+    public DirPanel(){
         this.setLayout(new BorderLayout());
         buildDirTree();
-        dirtree.addTreeSelectionListener(new MyTreeListener());
-        dirtree.addTreeWillExpandListener(new MyTreeListener());
         scrollpane.setViewportView(dirtree);
         scrollpane.setSize(this.getSize());
         this.add(scrollpane, BorderLayout.CENTER);
@@ -38,7 +36,6 @@ public class DirPanel extends JPanel{
         File[] files = drive.getFile().listFiles();
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(drive);
         DefaultTreeModel treemodel = new DefaultTreeModel(root);
-
         lookLevelDown(root);
         addChildren(root);
         dirtree.setModel(treemodel);
@@ -76,28 +73,6 @@ public class DirPanel extends JPanel{
                 lookLevelDown(node);
                 parent.add(node);
             }
-        }
-    }
-
-    class MyTreeListener implements TreeSelectionListener, TreeWillExpandListener {
-
-        @Override
-        public void treeWillExpand(TreeExpansionEvent event) {
-            TreePath e = event.getPath();
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) e.getLastPathComponent();
-            addChildren(node);
-        }
-
-        @Override
-        public void treeWillCollapse(TreeExpansionEvent event) throws ExpandVetoException {
-        }
-
-        @Override
-        public void valueChanged(TreeSelectionEvent e) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) dirtree.getLastSelectedPathComponent();
-            MyFileNode mfn = (MyFileNode) node.getUserObject();
-            nodeSelected = mfn;
-            System.out.println(mfn.toString() + "; isDirectory(): " + mfn.isDirectory() + "; isSub(): " + mfn.hasSubDirectory() + "; Class: " + mfn.getClass());
         }
     }
 }

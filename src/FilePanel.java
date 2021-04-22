@@ -1,28 +1,32 @@
-import javax.swing.JPanel;
-import javax.swing.JList;
+import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
+import java.awt.*;
 import java.io.File;
 
 public class FilePanel extends JPanel {
-    private JList myList;
-    private DirPanel dir;
-    public FilePanel(DirPanel dir){
-        this.dir = dir;
-        showFiles();
+    private JList myList = new JList();
+    private JScrollPane scrollpane = new JScrollPane();
+    DefaultListModel model;
+    DefaultMutableTreeNode select;
+    public FilePanel(DefaultMutableTreeNode node){
+        this.setLayout(new BorderLayout());
+        model = new DefaultListModel();
+        this.select = node;
+        showFiles(select);
+        scrollpane.setViewportView(myList);
+        scrollpane.setSize(this.getSize());
+        this.add(scrollpane, BorderLayout.CENTER);
     }
 
-    public void showFiles(){
-        if(dir.nodeSelected != null) {
-            System.out.println("True");
-            File[] files = dir.nodeSelected.getFile().listFiles();
-            String[] names = new String[files.length];
-            for (int i = 0; i < names.length; i++) {
-                names[i] = files[i].getAbsolutePath();
+    public void showFiles(DefaultMutableTreeNode node){
+        MyFileNode mfn = (MyFileNode) node.getUserObject();
+        File[] files = mfn.getFile().listFiles();
+        if(files != null){
+            model.removeAllElements();  //refresh the TreeModel.
+            for(int i = 0; i < files.length; i++){
+                model.addElement(files[i].getName());
             }
-            if (files != null) {
-                System.out.println("True");
-                myList = new JList(names);
-                this.add(myList);
-            }
+            myList.setModel(model);
         }
     }
 
