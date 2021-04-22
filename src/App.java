@@ -172,11 +172,14 @@ public class App extends JFrame{
      */
     public void buildStatusbar(){
         statusbar.setLayout(new BorderLayout());
+        File disk = new File("C:");
         String cd, fspace, uspace, tspace;
         cd = "Current Drive: " + currentDrive;
-        fspace = " Free Space: " + 12345 + "GB";
-        uspace = " Used Space: " + 12345 + "GB";
-        tspace = " Total Space: " + 12345 + "GB";
+	//Testing
+        long totalUsed = disk.getTotalSpace() - disk.getFreeSpace();
+        fspace = " Free Space: " + (disk.getFreeSpace()/1000000000) + "GB";
+        uspace = " Used Space: " + (totalUsed/1000000000) + "GB";
+        tspace = " Total Space: " + (disk.getTotalSpace()/1000000000) + "GB";
         String statusOut = cd + fspace + uspace + tspace;
         JLabel statusLabel = new JLabel(statusOut);
         statusbar.add(statusLabel);
