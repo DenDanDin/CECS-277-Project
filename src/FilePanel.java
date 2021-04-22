@@ -2,12 +2,17 @@ import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.io.File;
-
+/**
+ * JPanel for the File Panel Window
+ */ 
 public class FilePanel extends JPanel {
     private JList myList = new JList();
     private JScrollPane scrollpane = new JScrollPane();
     DefaultListModel model;
     DefaultMutableTreeNode select;
+    /**
+     *  Adds a JList and scroll pane to the File Panel
+     */
     public FilePanel(DefaultMutableTreeNode node){
         this.setLayout(new BorderLayout());
         model = new DefaultListModel();
@@ -17,7 +22,9 @@ public class FilePanel extends JPanel {
         scrollpane.setSize(this.getSize());
         this.add(scrollpane, BorderLayout.CENTER);
     }
-
+    /*
+     *  Method to list files.  Iterates through files and adds to DefaultListModel for display.
+     */
     public void showFiles(DefaultMutableTreeNode node){
         MyFileNode mfn = (MyFileNode) node.getUserObject();
         File[] files = mfn.getFile().listFiles();
