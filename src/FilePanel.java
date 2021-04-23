@@ -6,7 +6,7 @@ import java.io.File;
  * JPanel for the File Panel Window
  */ 
 public class FilePanel extends JPanel {
-    private JList myList = new JList();
+    JList myList = new JList();
     private JScrollPane scrollpane = new JScrollPane();
     DefaultListModel model;
     DefaultMutableTreeNode select;
@@ -33,7 +33,8 @@ public class FilePanel extends JPanel {
         if(files != null){
             model.removeAllElements();  //refresh the TreeModel.
             for(int i = 0; i < files.length; i++){
-                model.addElement(files[i].getName());
+                MyFileNode file = new MyFileNode(files[i].getName());
+                model.addElement(file);
             }
             myList.setModel(model);
         }

@@ -1,9 +1,6 @@
 import javax.swing.JInternalFrame;
 import javax.swing.JSplitPane;
-import javax.swing.event.TreeExpansionEvent;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
-import javax.swing.event.TreeWillExpandListener;
+import javax.swing.event.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.TreePath;
@@ -31,6 +28,7 @@ public class FileFrame extends JInternalFrame {
         left.dirtree.addTreeSelectionListener(new FileFrameListener());
         left.dirtree.addTreeWillExpandListener(new FileFrameListener());
         right = new FilePanel(nodeSelected);
+        right.myList.addListSelectionListener(new FileFrameListener());
         splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, right);
         splitpane.setSize(600,400);
         this.getContentPane().add(splitpane);
@@ -41,7 +39,7 @@ public class FileFrame extends JInternalFrame {
         this.setVisible(true);
     }
 
-    class FileFrameListener implements TreeSelectionListener, TreeWillExpandListener {
+    class FileFrameListener implements TreeSelectionListener, TreeWillExpandListener, ListSelectionListener {
 
         @Override
         public void treeWillExpand(TreeExpansionEvent event) {
@@ -62,6 +60,11 @@ public class FileFrame extends JInternalFrame {
             MyFileNode mfn = (MyFileNode) node.getUserObject();
             //nodeSelected = mfn;
             System.out.println(mfn.toString() + "; isDirectory(): " + mfn.isDirectory() + "; isSub(): " + mfn.hasSubDirectory() + "; Class: " + mfn.getClass());
+        }
+
+        @Override
+        public void valueChanged(ListSelectionEvent e) {
+            System.out.println("Node is a :  " + right.myList.getSelectedValue().getClass());
         }
     }
 
