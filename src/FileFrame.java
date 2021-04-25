@@ -28,7 +28,7 @@ public class FileFrame extends JInternalFrame {
         left.dirtree.addTreeSelectionListener(new FileFrameListener());
         left.dirtree.addTreeWillExpandListener(new FileFrameListener());
         right = new FilePanel(nodeSelected);
-        right.myList.addListSelectionListener(new FileFrameListener());
+        //right.myList.addListSelectionListener(new FileFrameListener());
         splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, right);
         splitpane.setSize(600,400);
         this.getContentPane().add(splitpane);
@@ -64,7 +64,8 @@ public class FileFrame extends JInternalFrame {
 
         @Override
         public void valueChanged(ListSelectionEvent e) {
-            System.out.println("Node is a :  " + right.myList.getSelectedValue().getClass());
+//            System.out.println("Node is a :  " + right.myList.getSelectedValue().getClass());
+            System.out.println("True");
         }
     }
 

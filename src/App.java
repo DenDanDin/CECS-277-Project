@@ -41,7 +41,7 @@ public class App extends JFrame{
      */
     public void go(){
         this.setTitle("CECS 277 File Manager");
-        currentDrive = "C:";
+        currentDrive = "C:\\";
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.WHITE);
         topPanel.setLayout(new BorderLayout());
