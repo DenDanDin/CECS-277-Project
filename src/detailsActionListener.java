@@ -5,14 +5,25 @@ import java.awt.event.ActionListener;
  * ActionListener for the Details button.
  */
 public class detailsActionListener implements ActionListener {
+
+    FileFrame frame;
+
     /**
-     * For now, just prints a msg to console saying "You Pressed Details".
+     * Constructor for detailsActionListener
+     * @param frame - the frame to edit when button is pressed.
+     */
+    public detailsActionListener(FileFrame frame){
+        this.frame = frame;
+    }
+    /**
+     * Displays the FilePanel with the file details
+     * (name, date modified, size).
      * @param e - the event.
      */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Details")) {
-            System.out.println("You pressed Details");
+            frame.right.showFileDetails();
         }
     }
 }

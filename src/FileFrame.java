@@ -15,15 +15,21 @@ public class FileFrame extends JInternalFrame {
     DirPanel left;
     FilePanel right;
     DefaultMutableTreeNode nodeSelected;
-
+    JInternalFrame frame;
     /**
      * Creates a splitplane where the left side will be
      * the Directory Panel, and the right side will be the File Panel.
      */
     public FileFrame(App a){
+        a.simple.addActionListener(new simpleActionListener(this));
+        a.details.addActionListener(new detailsActionListener(this));
+        a.expand_branch.addActionListener(new expandActionListener(this));
+        a.collapse_branch.addActionListener(new collapseActionListener(this));
+        frame = this;
         this.setLayout(new BorderLayout());
         MyFileNode drive = new MyFileNode(a.currentDrive);
         nodeSelected = new DefaultMutableTreeNode(drive);
+        this.setTitle(drive.getFileName());
         left = new DirPanel();
         left.dirtree.addTreeSelectionListener(new FileFrameListener());
         left.dirtree.addTreeWillExpandListener(new FileFrameListener());
@@ -55,10 +61,11 @@ public class FileFrame extends JInternalFrame {
         @Override
         public void valueChanged(TreeSelectionEvent e) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) left.dirtree.getLastSelectedPathComponent();
-            nodeSelected = node;
-            right.showFiles(nodeSelected);
+            left.nodeSelected = node;
+            right.selectedNode = node;
+            right.showFileDetails();
             MyFileNode mfn = (MyFileNode) node.getUserObject();
-            //nodeSelected = mfn;
+            frame.setTitle(mfn.getFileName());
             System.out.println(mfn.toString() + "; isDirectory(): " + mfn.isDirectory() + "; isSub(): " + mfn.hasSubDirectory() + "; Class: " + mfn.getClass());
         }
 

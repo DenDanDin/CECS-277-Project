@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusListener;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -12,9 +13,11 @@ public class App extends JFrame{
     JToolBar toolbar, drivebar, statusbar;
     JDesktopPane desktop;
     ArrayList<FileFrame> list_ff;
-    //FileManagerFrame myf, myf2;
-    JButton simple, details, ok, cancel;
+    FileFrame frame;
+    JButton simple, details;
     String currentDrive;
+    JMenuItem expand_branch, collapse_branch;
+    private File[] drives;
 
     /**
      * Initializes the panels and features of File Manager
@@ -28,12 +31,9 @@ public class App extends JFrame{
         statusbar = new JToolBar();
         desktop = new JDesktopPane();
         list_ff = new ArrayList<FileFrame>();
-
         simple = new JButton("Simple");
-        simple.addActionListener(new simpleActionListener());
-
         details = new JButton("Details");
-        details.addActionListener(new detailsActionListener());
+        drives = File.listRoots();
     }
 
     /**
@@ -41,7 +41,7 @@ public class App extends JFrame{
      */
     public void go(){
         this.setTitle("CECS 277 File Manager");
-        currentDrive = "C:\\";
+        currentDrive = drives[0].getAbsolutePath();
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.WHITE);
         topPanel.setLayout(new BorderLayout());
@@ -52,18 +52,16 @@ public class App extends JFrame{
         panel.add(topPanel, BorderLayout.NORTH);
 
 
+        frame = new FileFrame(this);
+        frame.setLocation(desktop.getX(), desktop.getY()+100);
+        list_ff.add(frame);
+        desktop.add(list_ff.get(0));
+
         buildToolbar();
         topPanel.add(toolbar, BorderLayout.SOUTH);
         buildStatusbar();
         panel.add(statusbar, BorderLayout.SOUTH);
-
         panel.add(desktop, BorderLayout.CENTER);
-
-        FileFrame ff = new FileFrame(this);
-        ff.setTitle(currentDrive);
-        ff.setLocation(desktop.getX(), desktop.getY()+100);
-        list_ff.add(ff);
-        desktop.add(list_ff.get(0));
 
         this.add(panel);
         this.setSize(1000, 800);
@@ -106,7 +104,6 @@ public class App extends JFrame{
      */
     public void buildTreeMenu(){
         JMenu tree = new JMenu("Tree");
-        JMenuItem expand_branch, collapse_branch;
         expand_branch = new JMenuItem("Expand Branch");
         collapse_branch = new JMenuItem("Collapse Branch");
         tree.add(expand_branch);
@@ -150,10 +147,9 @@ public class App extends JFrame{
     public void buildToolbar(){
         toolbar.setLayout(new FlowLayout());
         toolbar.setFloatable(false);
-        File[] paths = File.listRoots();
-        String[] pathnames = new String[paths.length];
+        String[] pathnames = new String[drives.length];
         for(int i = 0; i < pathnames.length; i++){
-            pathnames[i] = paths[i].getAbsolutePath();
+            pathnames[i] = drives[i].getAbsolutePath();
         }
         JComboBox combo = new JComboBox(pathnames);
         toolbar.add(combo);
@@ -184,5 +180,4 @@ public class App extends JFrame{
         JLabel statusLabel = new JLabel(statusOut);
         statusbar.add(statusLabel);
     }
-
 }

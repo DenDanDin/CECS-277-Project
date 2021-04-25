@@ -5,15 +5,24 @@ import java.awt.event.ActionListener;
  * ActionListener for the Simple button.
  */
 public class simpleActionListener implements ActionListener {
+
+    FileFrame frame;
+
     /**
-     * For now, displays a msg to console saying "You Pressed Simple".
-     * This will be different in the future.
+     * Constructor for simpleActionListener.
+     * @param frame - the frame to edit when button is pressed.
+     */
+    public simpleActionListener(FileFrame frame){
+        this.frame = frame;
+    }
+    /**
+     * Displays the FilePanel with only the file name.
      * @param e - the event.
      */
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Simple")) {
-            System.out.println("You pressed Simple");
+            frame.right.showFileSimple();
         }
     }
 }

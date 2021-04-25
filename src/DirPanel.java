@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public class DirPanel extends JPanel{
     JScrollPane scrollpane = new JScrollPane();
     JTree dirtree = new JTree();
-    MyFileNode nodeSelected;
+    DefaultMutableTreeNode nodeSelected;
 
     /**
      * Adds a scrollpane and a JTree to the directory window.

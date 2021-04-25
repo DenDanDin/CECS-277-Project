@@ -7,6 +7,10 @@ import java.awt.Desktop;
 public class FileManager {
 
     public static void main(String args[]){
+        File[] files = File.listRoots();
+        for(File path: files){
+            System.out.println(path);
+        }
         App app = new App();
         app.go();
 
