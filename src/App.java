@@ -1,8 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.FocusListener;
+import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -17,6 +15,8 @@ public class App extends JFrame{
     JButton simple, details;
     String currentDrive;
     JMenuItem expand_branch, collapse_branch;
+    JComboBox combo;
+    JLabel statusLabel;
     private File[] drives;
 
     /**
@@ -34,6 +34,9 @@ public class App extends JFrame{
         simple = new JButton("Simple");
         details = new JButton("Details");
         drives = File.listRoots();
+        combo = new JComboBox(drives);
+        currentDrive = drives[0].getAbsolutePath();
+        statusLabel = new JLabel();
     }
 
     /**
@@ -41,7 +44,7 @@ public class App extends JFrame{
      */
     public void go(){
         this.setTitle("CECS 277 File Manager");
-        currentDrive = drives[0].getAbsolutePath();
+
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.WHITE);
         topPanel.setLayout(new BorderLayout());
@@ -59,10 +62,12 @@ public class App extends JFrame{
 
         buildToolbar();
         topPanel.add(toolbar, BorderLayout.SOUTH);
-        buildStatusbar();
+        buildStatusBar();
         panel.add(statusbar, BorderLayout.SOUTH);
         panel.add(desktop, BorderLayout.CENTER);
 
+        File file = (File) combo.getSelectedItem();
+        currentDrive = file.getAbsolutePath();
         this.add(panel);
         this.setSize(1000, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -147,11 +152,15 @@ public class App extends JFrame{
     public void buildToolbar(){
         toolbar.setLayout(new FlowLayout());
         toolbar.setFloatable(false);
-        String[] pathnames = new String[drives.length];
-        for(int i = 0; i < pathnames.length; i++){
-            pathnames[i] = drives[i].getAbsolutePath();
-        }
-        JComboBox combo = new JComboBox(pathnames);
+        ActionListener comboActionListener = new ActionListener(){
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                File file = (File) combo.getSelectedItem();
+                currentDrive = file.getAbsolutePath();
+                System.out.println("ACTION: " + currentDrive);
+            }
+        };
+        combo.addActionListener(comboActionListener);
         toolbar.add(combo);
 
         Dimension dim = new Dimension(120,30);
@@ -166,18 +175,21 @@ public class App extends JFrame{
      * Builds the Statusbar (Current Drive, Free Space,
      *  Used Space, Total Space)
      */
-    public void buildStatusbar(){
+    public void buildStatusBar(){
         statusbar.setLayout(new BorderLayout());
-        File disk = new File("C:");
+        resetStatus();
+        statusbar.add(statusLabel);
+    }
+
+    public void resetStatus(){
+        File disk = (File) combo.getSelectedItem();
         String cd, fspace, uspace, tspace;
         cd = "Current Drive: " + currentDrive;
-	//Testing
         long totalUsed = disk.getTotalSpace() - disk.getFreeSpace();
-        fspace = " Free Space: " + (disk.getFreeSpace()/1000000000) + "GB";
-        uspace = " Used Space: " + (totalUsed/1000000000) + "GB";
-        tspace = " Total Space: " + (disk.getTotalSpace()/1000000000) + "GB";
+        fspace = "  Free Space: " + (disk.getFreeSpace()/1000000000) + "GB";
+        uspace = "  Used Space: " + (totalUsed/1000000000) + "GB";
+        tspace = "  Total Space: " + (disk.getTotalSpace()/1000000000) + "GB";
         String statusOut = cd + fspace + uspace + tspace;
-        JLabel statusLabel = new JLabel(statusOut);
-        statusbar.add(statusLabel);
+        statusLabel.setText(statusOut);
     }
 }

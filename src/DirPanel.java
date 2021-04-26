@@ -16,13 +16,15 @@ public class DirPanel extends JPanel{
     JScrollPane scrollpane = new JScrollPane();
     JTree dirtree = new JTree();
     DefaultMutableTreeNode nodeSelected;
+    DefaultMutableTreeNode root;
 
     /**
      * Adds a scrollpane and a JTree to the directory window.
      */
-    public DirPanel(){
+    public DirPanel(DefaultMutableTreeNode root){
         this.setLayout(new BorderLayout());
-        buildDirTree();
+        this.root = root;
+        buildDirTree(root);
         scrollpane.setViewportView(dirtree);
         scrollpane.setSize(this.getSize());
         this.add(scrollpane, BorderLayout.CENTER);
@@ -31,8 +33,8 @@ public class DirPanel extends JPanel{
     /**
      * Builds the Directory Tree.
      */
-    public void buildDirTree(){
-        MyFileNode drive = new MyFileNode("C:\\");
+    public void buildDirTree(DefaultMutableTreeNode node){
+        MyFileNode drive = (MyFileNode) node.getUserObject();
         File[] files = drive.getFile().listFiles();
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(drive);
         DefaultTreeModel treemodel = new DefaultTreeModel(root);

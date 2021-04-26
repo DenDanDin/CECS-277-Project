@@ -16,11 +16,13 @@ public class FileFrame extends JInternalFrame {
     FilePanel right;
     DefaultMutableTreeNode nodeSelected;
     JInternalFrame frame;
+    App a;
     /**
      * Creates a splitplane where the left side will be
      * the Directory Panel, and the right side will be the File Panel.
      */
     public FileFrame(App a){
+        this.a = a;
         a.simple.addActionListener(new simpleActionListener(this));
         a.details.addActionListener(new detailsActionListener(this));
         a.expand_branch.addActionListener(new expandActionListener(this));
@@ -30,13 +32,15 @@ public class FileFrame extends JInternalFrame {
         MyFileNode drive = new MyFileNode(a.currentDrive);
         nodeSelected = new DefaultMutableTreeNode(drive);
         this.setTitle(drive.getFileName());
-        left = new DirPanel();
+        left = new DirPanel(nodeSelected);
         left.dirtree.addTreeSelectionListener(new FileFrameListener());
         left.dirtree.addTreeWillExpandListener(new FileFrameListener());
         right = new FilePanel(nodeSelected);
         //right.myList.addListSelectionListener(new FileFrameListener());
         splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, right);
         splitpane.setSize(600,400);
+
+        this.addInternalFrameListener(new FileFrameListener());
         this.getContentPane().add(splitpane);
         this.setClosable(true);
         this.setMaximizable(true);
@@ -45,7 +49,7 @@ public class FileFrame extends JInternalFrame {
         this.setVisible(true);
     }
 
-    class FileFrameListener implements TreeSelectionListener, TreeWillExpandListener, ListSelectionListener {
+    class FileFrameListener implements TreeSelectionListener, TreeWillExpandListener, ListSelectionListener, InternalFrameListener {
 
         @Override
         public void treeWillExpand(TreeExpansionEvent event) {
@@ -73,6 +77,39 @@ public class FileFrame extends JInternalFrame {
         public void valueChanged(ListSelectionEvent e) {
 //            System.out.println("Node is a :  " + right.myList.getSelectedValue().getClass());
             System.out.println("True");
+        }
+
+        @Override
+        public void internalFrameOpened(InternalFrameEvent e) {
+        }
+
+        @Override
+        public void internalFrameClosing(InternalFrameEvent e) {
+        }
+
+        @Override
+        public void internalFrameClosed(InternalFrameEvent e) {
+            a.list_ff.remove(this);
+            System.out.println("Removed");
+        }
+
+        @Override
+        public void internalFrameIconified(InternalFrameEvent e) {
+        }
+
+        @Override
+        public void internalFrameDeiconified(InternalFrameEvent e) {
+        }
+
+        @Override
+        public void internalFrameActivated(InternalFrameEvent e) {
+            System.out.println("Activation");
+            a.resetStatus();
+
+        }
+
+        @Override
+        public void internalFrameDeactivated(InternalFrameEvent e) {
         }
     }
 

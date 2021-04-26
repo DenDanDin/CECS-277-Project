@@ -29,6 +29,7 @@ public class FilePanel extends JPanel {
                 return false;
             }
         };
+
         tableOfFiles = new JTable(model);
         for(String name : columnNames){
             model.addColumn(name);
@@ -36,7 +37,6 @@ public class FilePanel extends JPanel {
         tableOfFiles.setShowGrid(false);
         tableOfFiles.setTableHeader(null);
         showFileDetails();
-
 
         scrollpane.setViewportView(tableOfFiles);
         scrollpane.setSize(this.getSize());
