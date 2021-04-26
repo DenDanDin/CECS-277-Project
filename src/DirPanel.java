@@ -34,6 +34,7 @@ public class DirPanel extends JPanel{
      * Builds the Directory Tree.
      */
     public void buildDirTree(DefaultMutableTreeNode node){
+        nodeSelected = node;
         MyFileNode drive = (MyFileNode) node.getUserObject();
         File[] files = drive.getFile().listFiles();
         DefaultMutableTreeNode root = new DefaultMutableTreeNode(drive);
@@ -49,6 +50,7 @@ public class DirPanel extends JPanel{
      * @param parent - the node to check.
      */
     public void lookLevelDown(DefaultMutableTreeNode parent){
+        nodeSelected = parent;
         MyFileNode mfn = (MyFileNode) parent.getUserObject();
         if(mfn.isDirectory()){
             if(mfn.hasSubDirectory()){
@@ -63,6 +65,7 @@ public class DirPanel extends JPanel{
      * @param parent - the parent to add children to.
      */
     public void addChildren(DefaultMutableTreeNode parent){
+        nodeSelected = parent;
         MyFileNode mfn = (MyFileNode) parent.getUserObject();
         File[] files = mfn.getFile().listFiles();
         if(parent.getChildCount() == 1 && parent.getChildAt(0).toString().equals("Temp")){ // if temp value.

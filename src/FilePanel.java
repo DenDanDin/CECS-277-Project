@@ -49,7 +49,6 @@ public class FilePanel extends JPanel {
      */
     public void showFileDetails(){
         MyFileNode mfn = (MyFileNode) selectedNode.getUserObject();
-        System.out.println("From showFileDetails..." + mfn.getFileName());
         File[] files = mfn.getFile().listFiles();
         if(files != null){
             model.setRowCount(0);
