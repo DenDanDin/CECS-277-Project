@@ -177,18 +177,21 @@ public class App extends JFrame{
      */
     public void buildStatusBar(){
         statusbar.setLayout(new BorderLayout());
-        resetStatus();
+        File disk = (File) combo.getSelectedItem();
+        resetStatus(disk);
         statusbar.add(statusLabel);
     }
 
-    public void resetStatus(){
-        File disk = (File) combo.getSelectedItem();
+    public void resetStatus(File drive){
         String cd, fspace, uspace, tspace;
+        currentDrive = drive.getAbsolutePath();
+
         cd = "Current Drive: " + currentDrive;
-        long totalUsed = disk.getTotalSpace() - disk.getFreeSpace();
-        fspace = "  Free Space: " + (disk.getFreeSpace()/1000000000) + "GB";
+        System.out.println(cd);
+        long totalUsed = drive.getTotalSpace() - drive.getFreeSpace();
+        fspace = "  Free Space: " + (drive.getFreeSpace()/1000000000) + "GB";
         uspace = "  Used Space: " + (totalUsed/1000000000) + "GB";
-        tspace = "  Total Space: " + (disk.getTotalSpace()/1000000000) + "GB";
+        tspace = "  Total Space: " + (drive.getTotalSpace()/1000000000) + "GB";
         String statusOut = cd + fspace + uspace + tspace;
         statusLabel.setText(statusOut);
     }

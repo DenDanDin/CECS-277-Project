@@ -1,5 +1,6 @@
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 /**
  * ActionListener for the New button.
@@ -22,6 +23,8 @@ public class newActionListener implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+        File disk = (File) a.combo.getSelectedItem();
+        a.currentDrive = disk.getAbsolutePath();
         FileFrame ff = new FileFrame(a);
         ff.setLocation(a.desktop.getX(), a.desktop.getY()+100);
         a.list_ff.add(ff);

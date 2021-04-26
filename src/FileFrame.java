@@ -35,6 +35,7 @@ public class FileFrame extends JInternalFrame {
     DefaultMutableTreeNode nodeSelected;
     JInternalFrame frame;
     App a;
+    MyFileNode frameDrive;
     /**
      * Creates a splitplane where the left side will be
      * the Directory Panel, and the right side will be the File Panel.
@@ -48,9 +49,9 @@ public class FileFrame extends JInternalFrame {
 
         frame = this;
         this.setLayout(new BorderLayout());
-        MyFileNode drive = new MyFileNode(a.currentDrive);
-        nodeSelected = new DefaultMutableTreeNode(drive);
-        this.setTitle(drive.getFileName());
+        MyFileNode frameDrive = new MyFileNode(a.currentDrive);
+        nodeSelected = new DefaultMutableTreeNode(frameDrive);
+        this.setTitle(frameDrive.getFileName());
 
         left = new DirPanel(nodeSelected);
         left.dirtree.addTreeSelectionListener(new FileFrameListener());
@@ -124,7 +125,9 @@ public class FileFrame extends JInternalFrame {
         @Override
         public void internalFrameActivated(InternalFrameEvent e) {
             System.out.println("Activation");
-            a.resetStatus();
+            MyFileNode node = (MyFileNode) nodeSelected.getUserObject();
+            File current = node.getFile();
+            a.resetStatus(current);
         }
 
         @Override
