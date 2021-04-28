@@ -105,7 +105,7 @@ public class App extends JFrame{
         file.add(exit);
         menubar.add(file);
     }
-//     TODO POPUP
+//     TODO POPUP TEST
 //    public void PopUp() {
 //    	final JPopupMenu popup = new JPopupMenu("File");
 //    	
