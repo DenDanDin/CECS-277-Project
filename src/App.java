@@ -169,27 +169,27 @@ public class App extends JFrame{
 //			}
 //    		
 //    	});
-    
-    	
-    	MouseListener mouseListener = new MouseAdapter() {
-    		public void mousePressed(MouseEvent e) {
-    			checkPopup(e);
-    		}
-    		public void mouseClicked(MouseEvent e) {
-    			checkPopup(e);
-    		}
-    		public void mouseReleased(MouseEvent e) {
-    			checkPopup(e);
-    		}
-    		private void checkPopup(MouseEvent e) {
-    			if (e.isPopupTrigger()) {
-    				popup.show(e.getComponent(), e.getX(), e.getY());
-    			}
-    		}
-    		
-    	};
-    	
-    }
+//
+//
+//    	MouseListener mouseListener = new MouseAdapter() {
+//    		public void mousePressed(MouseEvent e) {
+//    			checkPopup(e);
+//    		}
+//    		public void mouseClicked(MouseEvent e) {
+//    			checkPopup(e);
+//    		}
+//    		public void mouseReleased(MouseEvent e) {
+//    			checkPopup(e);
+//    		}
+//    		private void checkPopup(MouseEvent e) {
+//    			if (e.isPopupTrigger()) {
+//    				popup.show(e.getComponent(), e.getX(), e.getY());
+//    			}
+//    		}
+//
+//    	};
+//
+//    }
     
     /**
      * Builds the Tree part of the Menu.

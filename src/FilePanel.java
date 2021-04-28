@@ -3,6 +3,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -11,7 +13,6 @@ import java.text.SimpleDateFormat;
  * JPanel for the File Panel Window
  */ 
 public class FilePanel extends JPanel {
-    //JList myList = new JList();
     private JScrollPane scrollpane = new JScrollPane();
     JTable tableOfFiles;
     DefaultTableModel model;
@@ -36,6 +37,7 @@ public class FilePanel extends JPanel {
         }
         tableOfFiles.setShowGrid(false);
         tableOfFiles.setTableHeader(null);
+
         showFileDetails();
 
         scrollpane.setViewportView(tableOfFiles);

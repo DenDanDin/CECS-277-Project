@@ -11,6 +11,8 @@ import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDropEvent;
 import java.awt.dnd.DropTargetEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.image.ReplicateScaleFilter;
 import java.io.File;
 import java.io.IOException;
@@ -57,6 +59,8 @@ public class FileFrame extends JInternalFrame {
         left.dirtree.addTreeSelectionListener(new FileFrameListener());
         left.dirtree.addTreeWillExpandListener(new FileFrameListener());
         right = new FilePanel(nodeSelected);
+        right.tableOfFiles.addMouseListener(new FilePanelListener());
+
         //right.myList.addListSelectionListener(new FileFrameListener());
 
         splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, right);
@@ -69,6 +73,25 @@ public class FileFrame extends JInternalFrame {
         this.setIconifiable(true);
         this.setSize(700,500);
         this.setVisible(true);
+    }
+
+    class FilePanelListener extends MouseAdapter {
+        public void mouseClicked(MouseEvent e){
+            if(e.getClickCount() == 2){
+                int row = right.tableOfFiles.getSelectedRow();
+                String name = (String) right.tableOfFiles.getModel().getValueAt(row, 0);  //returns the name of file.
+                System.out.println(name);
+                MyFileNode file = (MyFileNode) left.nodeSelected.getUserObject();
+                String fileName = file.getFileName() + "\\" + name;
+                File temp = new File(fileName);
+                Desktop desktop = Desktop.getDesktop();
+                try{
+                    desktop.open(temp);
+                } catch(IOException ex){
+                    System.out.println(ex.toString());
+                }
+            }
+        }
     }
 
     class FileFrameListener implements TreeSelectionListener, TreeWillExpandListener, ListSelectionListener, InternalFrameListener {
