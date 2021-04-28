@@ -82,6 +82,8 @@ public class App extends JFrame{
         buildTreeMenu();
         buildWindowMenu();
         buildHelpMenu();
+
+        
     }
 
     /**
@@ -103,7 +105,42 @@ public class App extends JFrame{
         file.add(exit);
         menubar.add(file);
     }
-
+//     TODO POPUP
+//    public void PopUp() {
+//    	final JPopupMenu popup = new JPopupMenu("File");
+//    	
+//    	JMenuItem copy = new JMenuItem("Copy");
+//    	copy.setActionCommand("Copy");
+//    	
+//    	JMenuItem paste = new JMenuItem("Paste");
+//    	paste.setActionCommand("Paste");
+//    	
+//    	JMenuItem rename = new JMenuItem("Rename");
+//    	rename.setActionCommand("Rename");
+//    	
+//    	popup.add(copy);
+//    	popup.add(paste);
+//    	popup.add(rename);
+//    	
+//    	MouseListener mouseListener = new MouseAdapter() {
+//    		public void mousePressed(MouseEvent e) {
+//    			checkPopup(e);
+//    		}
+//    		public void mouseClicked(MouseEvent e) {
+//    			checkPopup(e);
+//    		}
+//    		public void mouseReleased(MouseEvent e) {
+//    			checkPopup(e);
+//    		}
+//    		private void checkPopup(MouseEvent e) {
+//    			if (e.isPopupTrigger()) {
+//    				popup.show(e.getComponent(), e.getX(), e.getY());
+//    			}
+//    		}
+//    	};
+//    	
+//    }
+    
     /**
      * Builds the Tree part of the Menu.
      */
