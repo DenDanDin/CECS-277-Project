@@ -21,6 +21,9 @@ public class FilePanel extends JPanel {
     TableColumnModel columnModel;
     DefaultMutableTreeNode selectedNode;
     String[] columnNames = {"Name", "Date", "Size", "ParentPath"};
+    private int columnMinWidth;
+    private int columnMaxWidth;
+    private int columnWidth;
     /**
      *  Adds a JList and scroll pane to the File Panel
      */
@@ -40,7 +43,14 @@ public class FilePanel extends JPanel {
             model.addColumn(name);
         }
         columnModel = tableOfFiles.getColumnModel();
-        //columnModel.removeColumn(tableOfFiles.getColumn("ParentPath"));
+        columnMinWidth = columnModel.getColumn(0).getMinWidth();
+        columnMaxWidth = columnModel.getColumn(0).getMaxWidth();
+        columnWidth = columnModel.getColumn(0).getWidth();
+
+        columnModel.getColumn(3).setMinWidth(0);
+        columnModel.getColumn(3).setMaxWidth(0);
+        columnModel.getColumn(3).setWidth(0);
+
         tableOfFiles.setShowGrid(false);
         tableOfFiles.setTableHeader(null);
 
@@ -56,12 +66,24 @@ public class FilePanel extends JPanel {
      *
      */
     public void showFileDetails(){
-        model.setColumnCount(0);
-        for(String name : columnNames){
-            model.addColumn(name);
+        for(int i = 0; i < columnNames.length-1; i++){
+            columnModel.getColumn(i).setMinWidth(columnMinWidth);
+            columnModel.getColumn(i).setMaxWidth(columnMaxWidth);
+            columnModel.getColumn(i).setWidth(columnWidth);
         }
+        readFiles();
+    }
 
-        //columnModel.removeColumn(tableOfFiles.getColumn("ParentPath"));
+    public void showFileSimple(){
+        for(int i = 1; i < columnNames.length; i++){
+            columnModel.getColumn(i).setMinWidth(0);
+            columnModel.getColumn(i).setMaxWidth(0);
+            columnModel.getColumn(i).setWidth(0);
+        }
+        tableOfFiles.setModel(model);
+    }
+
+    public void readFiles(){
         MyFileNode mfn = (MyFileNode) selectedNode.getUserObject();
         File[] files = mfn.getFile().listFiles();
         if(files != null){
@@ -69,7 +91,7 @@ public class FilePanel extends JPanel {
             for(int i = 0; i < files.length; i++){
                 if(files[i].isDirectory()){
                     String parentPath = files[i].toPath().getParent().toString();
-                    Object[] data = {files[i].getName(), "\t", "\t", parentPath};
+                    Object[] data = {files[i].getName(), "", "", parentPath};
                     model.addRow(data);
                 }
                 else{
@@ -83,22 +105,6 @@ public class FilePanel extends JPanel {
                 }
             }
         }
-        tableOfFiles.setModel(model);
-    }
-
-    public void showFileSimple(){
-//        MyFileNode mfn = (MyFileNode) selectedNode.getUserObject();
-//        File[] files = mfn.getFile().listFiles();
-//        if(files != null){
-//            model.setRowCount(0);
-//            for(int i = 0; i < files.length; i++){
-//                Object[] data = {files[i].getName(), "", ""};
-//                model.addRow(data);
-//            }
-//        }
-        columnModel.removeColumn(tableOfFiles.getColumn("Date"));
-        columnModel.removeColumn(tableOfFiles.getColumn("Size"));
-        columnModel.removeColumn(tableOfFiles.getColumn("ParentPath"));
         tableOfFiles.setModel(model);
     }
 }

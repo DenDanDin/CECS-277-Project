@@ -86,7 +86,8 @@ public class FileFrame extends JInternalFrame {
 //                String filePath = (String) right.tableOfFiles.getModel().getValueAt(row, 3);
 //                System.out.println("FILE PATH: " + filePath);
                 MyFileNode file = (MyFileNode) left.nodeSelected.getUserObject();
-                String fileName = file.getFileName() + "\\" + name;
+                String fileName = file.getFileName() + File.separator + name;
+                System.out.println("open: " + fileName);
                 File temp = new File(fileName);
                 Desktop desktop = Desktop.getDesktop();
                 try{
@@ -175,18 +176,26 @@ public class FileFrame extends JInternalFrame {
                     String[] rowComponents;
                     for(int i = 0; i < nextRow.length; i++){
                         rowComponents = nextRow[i].split("\\t");
-                        for(String n : rowComponents){
-                            System.out.println("Test: " + n);
+
+                        //rowComponents[3] = file Parent Path ... rowComponents[0] = file name.
+                        File drag = new File(rowComponents[3] + File.separator + rowComponents[0]);
+                        MyFileNode mfn = (MyFileNode) left.nodeSelected.getUserObject();
+                        File dropDrive = mfn.getFile();
+                        //dropDrive is the directory of where you want to drop.
+                        File dropItem = new File(dropDrive.getAbsolutePath() + File.separator + drag.getName());
+                        //dropItem is the new file that will happen.
+                        Files.copy(drag.toPath(), dropItem.toPath());
+                        //copy the contents of the dragged file to the dropped file.
+
+                        if(drag.isDirectory()){ // if it's a directory, copy it's files also.
+                            File[] files = drag.listFiles();
+                            for(File f : files){
+                                File source = f;
+                                File tempFile = new File(dropItem.getAbsolutePath() + File.separator + source.getName());
+                                Files.copy(source.toPath(), tempFile.toPath());
+                            }
                         }
-                        //directories have rowCOmponents length == 5;
-                        // regulars have length == 4;
-//                        System.out.println("rowComponents length: " + rowComponents.length);
                         right.model.addRow(rowComponents);
-//                        MyFileNode mfn = (MyFileNode) left.nodeSelected.getUserObject();
-//                        File drive = mfn.getFile();
-//
-//                        System.out.println("New File: " + drive.getAbsolutePath() + "\\" + rowComponents[0]);
-//                        File file = new File(drive.getAbsolutePath() + "\\" + rowComponents[0]);
                     }
                 }
                 else {
@@ -214,6 +223,7 @@ public class FileFrame extends JInternalFrame {
                         }
                     }
                 }
+                right.readFiles();
             }
             catch(Exception ex){
                 System.out.println("Not Able To Drop");
