@@ -82,8 +82,6 @@ public class App extends JFrame{
         buildTreeMenu();
         buildWindowMenu();
         buildHelpMenu();
-
-        
     }
 
     /**

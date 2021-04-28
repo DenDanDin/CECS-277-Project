@@ -4,6 +4,7 @@ import javax.swing.event.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.TreePath;
+import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.UnsupportedFlavorException;
@@ -65,6 +66,7 @@ public class FileFrame extends JInternalFrame {
 
         splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, right);
         splitpane.setSize(600,400);
+        right.tableOfFiles.setDragEnabled(true);
         this.setDropTarget(new MyDropTarget());
         this.addInternalFrameListener(new FileFrameListener());
         this.getContentPane().add(splitpane);
@@ -81,6 +83,8 @@ public class FileFrame extends JInternalFrame {
                 int row = right.tableOfFiles.getSelectedRow();
                 String name = (String) right.tableOfFiles.getModel().getValueAt(row, 0);  //returns the name of file.
                 System.out.println(name);
+//                String filePath = (String) right.tableOfFiles.getModel().getValueAt(row, 3);
+//                System.out.println("FILE PATH: " + filePath);
                 MyFileNode file = (MyFileNode) left.nodeSelected.getUserObject();
                 String fileName = file.getFileName() + "\\" + name;
                 File temp = new File(fileName);
@@ -110,6 +114,7 @@ public class FileFrame extends JInternalFrame {
         @Override
         public void valueChanged(TreeSelectionEvent e) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) left.dirtree.getLastSelectedPathComponent();
+            frameDrive = (MyFileNode) node.getUserObject();
             left.nodeSelected = node;
             right.selectedNode = node;
             right.showFileDetails();
@@ -163,27 +168,50 @@ public class FileFrame extends JInternalFrame {
             try{
                 evt.acceptDrop(DnDConstants.ACTION_COPY);
                 List<Object> result;
-                result = (List) evt.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
-                for(Object o: result){
-                    File fileAdded = (File) o;
-                    File destination = new File(fileAdded.getAbsolutePath());
-                    Files.copy(fileAdded.toPath(), destination.toPath());
-                    MyFileNode mfn = (MyFileNode) left.nodeSelected.getUserObject();
-                    File parent = mfn.getFile();
-                    File copy = new File(parent.getAbsolutePath() + "\\" + destination.getName());
-                    Files.copy(destination.toPath(), copy.toPath());
+                if(evt.getTransferable().isDataFlavorSupported(DataFlavor.stringFlavor)){
 
-                    if(fileAdded.isDirectory()){
-                        Object[] data = {fileAdded.getName(), "", ""};
-                        right.model.addRow(data);
+                    String temp = (String)evt.getTransferable().getTransferData(DataFlavor.stringFlavor);
+                    String[] nextRow = temp.split("\\n");
+                    String[] rowComponents;
+                    for(int i = 0; i < nextRow.length; i++){
+                        rowComponents = nextRow[i].split("\\t");
+                        for(String n : rowComponents){
+                            System.out.println("Test: " + n);
+                        }
+                        //directories have rowCOmponents length == 5;
+                        // regulars have length == 4;
+//                        System.out.println("rowComponents length: " + rowComponents.length);
+                        right.model.addRow(rowComponents);
+//                        MyFileNode mfn = (MyFileNode) left.nodeSelected.getUserObject();
+//                        File drive = mfn.getFile();
+//
+//                        System.out.println("New File: " + drive.getAbsolutePath() + "\\" + rowComponents[0]);
+//                        File file = new File(drive.getAbsolutePath() + "\\" + rowComponents[0]);
                     }
-                    else{
-                        SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-                        String dateModified = formatter.format(fileAdded.lastModified());
-                        DecimalFormat dformat = new DecimalFormat("#,###");
-                        String sizeOfFile = dformat.format(fileAdded.length());
-                        Object[] data = {fileAdded.getName(), dateModified, sizeOfFile};
-                        right.model.addRow(data);
+                }
+                else {
+                    result = (List) evt.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+                    for (Object o : result) {
+                        File fileAdded = (File) o;
+                        System.out.println("fileAdded: " + fileAdded.getAbsolutePath());
+                        File destination = new File(fileAdded.getAbsolutePath());
+                        Files.copy(fileAdded.toPath(), destination.toPath());
+                        MyFileNode mfn = (MyFileNode) left.nodeSelected.getUserObject();
+                        File parent = mfn.getFile();
+                        File copy = new File(parent.getAbsolutePath() + "\\" + destination.getName());
+                        Files.copy(destination.toPath(), copy.toPath());
+
+                        if (fileAdded.isDirectory()) {
+                            Object[] data = {fileAdded.getName(), "", ""};
+                            right.model.addRow(data);
+                        } else {
+                            SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+                            String dateModified = formatter.format(fileAdded.lastModified());
+                            DecimalFormat dformat = new DecimalFormat("#,###");
+                            String sizeOfFile = dformat.format(fileAdded.length());
+                            Object[] data = {fileAdded.getName(), dateModified, sizeOfFile};
+                            right.model.addRow(data);
+                        }
                     }
                 }
             }
