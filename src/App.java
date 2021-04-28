@@ -105,7 +105,6 @@ public class App extends JFrame{
         file.add(exit);
         menubar.add(file);
     }
-//     TODO POPUP TEST
 //    public void PopUp() {
 //    	final JPopupMenu popup = new JPopupMenu("File");
 //    	
@@ -137,9 +136,60 @@ public class App extends JFrame{
 //    				popup.show(e.getComponent(), e.getX(), e.getY());
 //    			}
 //    		}
+//    		
 //    	};
 //    	
 //    }
+//    public void PopUp2() {
+//    	final JPopupMenu popup = new JPopupMenu("File");
+//    	popup.setName("File");
+//    	JMenuItem copy = new JMenuItem();
+//    	copy.setText("Copy");
+//    	copy.setName("CopyMenu");
+//    	popup.add(copy);
+//    	JMenuItem paste = new JMenuItem();
+//    	paste.setText("Paste");
+//    	paste.setName("PasteMenu");
+//    	popup.add(paste);
+//    	
+//    	copy.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// HERE WE ADD COPY ACTION??
+//				
+//			}
+//    		
+//    	});
+//    	paste.addActionListener(new ActionListener() {
+//
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				// HERE WE ADD PASTE ACTION??
+//				
+//			}
+//    		
+//    	});
+    
+    	
+    	MouseListener mouseListener = new MouseAdapter() {
+    		public void mousePressed(MouseEvent e) {
+    			checkPopup(e);
+    		}
+    		public void mouseClicked(MouseEvent e) {
+    			checkPopup(e);
+    		}
+    		public void mouseReleased(MouseEvent e) {
+    			checkPopup(e);
+    		}
+    		private void checkPopup(MouseEvent e) {
+    			if (e.isPopupTrigger()) {
+    				popup.show(e.getComponent(), e.getX(), e.getY());
+    			}
+    		}
+    		
+    	};
+    	
+    }
     
     /**
      * Builds the Tree part of the Menu.
