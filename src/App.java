@@ -17,6 +17,7 @@ public class App extends JFrame{
     JMenuItem expand_branch, collapse_branch;
     JComboBox combo;
     JLabel statusLabel;
+    MouseListener poplisten;
     private File[] drives;
 
     /**
@@ -37,6 +38,7 @@ public class App extends JFrame{
         combo = new JComboBox(drives);
         currentDrive = drives[0].getAbsolutePath();
         statusLabel = new JLabel();
+        poplisten = new PopListener();
     }
 
     /**
@@ -44,16 +46,19 @@ public class App extends JFrame{
      */
     public void go(){
         this.setTitle("CECS 277 File Manager");
-
         panel.setLayout(new BorderLayout());
         panel.setBackground(Color.WHITE);
         topPanel.setLayout(new BorderLayout());
-
         buildMenu();
         topPanel.add(menubar, BorderLayout.NORTH);
         topPanel.setBackground(Color.BLUE);
         panel.add(topPanel, BorderLayout.NORTH);
-
+        
+        // Set window to be able to right click
+        // **IMPORTANT**
+        // Replace this with whatever variable the actual file explorer window is called, wasn't too sure so temporarily
+        // leaving as this
+        this.addMouseListener(poplisten);
 
         frame = new FileFrame(this);
         frame.setLocation(desktop.getX(), desktop.getY()+100);
@@ -103,91 +108,7 @@ public class App extends JFrame{
         file.add(exit);
         menubar.add(file);
     }
-//    public void PopUp() {
-//    	final JPopupMenu popup = new JPopupMenu("File");
-//    	
-//    	JMenuItem copy = new JMenuItem("Copy");
-//    	copy.setActionCommand("Copy");
-//    	
-//    	JMenuItem paste = new JMenuItem("Paste");
-//    	paste.setActionCommand("Paste");
-//    	
-//    	JMenuItem rename = new JMenuItem("Rename");
-//    	rename.setActionCommand("Rename");
-//    	
-//    	popup.add(copy);
-//    	popup.add(paste);
-//    	popup.add(rename);
-//    	
-//    	MouseListener mouseListener = new MouseAdapter() {
-//    		public void mousePressed(MouseEvent e) {
-//    			checkPopup(e);
-//    		}
-//    		public void mouseClicked(MouseEvent e) {
-//    			checkPopup(e);
-//    		}
-//    		public void mouseReleased(MouseEvent e) {
-//    			checkPopup(e);
-//    		}
-//    		private void checkPopup(MouseEvent e) {
-//    			if (e.isPopupTrigger()) {
-//    				popup.show(e.getComponent(), e.getX(), e.getY());
-//    			}
-//    		}
-//    		
-//    	};
-//    	
-//    }
-//    public void PopUp2() {
-//    	final JPopupMenu popup = new JPopupMenu("File");
-//    	popup.setName("File");
-//    	JMenuItem copy = new JMenuItem();
-//    	copy.setText("Copy");
-//    	copy.setName("CopyMenu");
-//    	popup.add(copy);
-//    	JMenuItem paste = new JMenuItem();
-//    	paste.setText("Paste");
-//    	paste.setName("PasteMenu");
-//    	popup.add(paste);
-//    	
-//    	copy.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// HERE WE ADD COPY ACTION??
-//				
-//			}
-//    		
-//    	});
-//    	paste.addActionListener(new ActionListener() {
-//
-//			@Override
-//			public void actionPerformed(ActionEvent e) {
-//				// HERE WE ADD PASTE ACTION??
-//				
-//			}
-//    		
-//    	});
-//
-//
-//    	MouseListener mouseListener = new MouseAdapter() {
-//    		public void mousePressed(MouseEvent e) {
-//    			checkPopup(e);
-//    		}
-//    		public void mouseClicked(MouseEvent e) {
-//    			checkPopup(e);
-//    		}
-//    		public void mouseReleased(MouseEvent e) {
-//    			checkPopup(e);
-//    		}
-//    		private void checkPopup(MouseEvent e) {
-//    			if (e.isPopupTrigger()) {
-//    				popup.show(e.getComponent(), e.getX(), e.getY());
-//    			}
-//    		}
-//
-//    	};
-//
-//    }
+
     
     /**
      * Builds the Tree part of the Menu.
