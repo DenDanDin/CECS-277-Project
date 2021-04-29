@@ -99,7 +99,7 @@ public class FileFrame extends JInternalFrame {
         }
     }
 
-    class FileFrameListener implements TreeSelectionListener, TreeWillExpandListener, ListSelectionListener, InternalFrameListener {
+    class FileFrameListener implements TreeSelectionListener, TreeWillExpandListener, InternalFrameListener {
 
         @Override
         public void treeWillExpand(TreeExpansionEvent event) {
@@ -124,11 +124,6 @@ public class FileFrame extends JInternalFrame {
             System.out.println(mfn.toString() + "; isDirectory(): " + mfn.isDirectory() + "; isSub(): " + mfn.hasSubDirectory() + "; Class: " + mfn.getClass());
         }
 
-        @Override
-        public void valueChanged(ListSelectionEvent e) {
-//            System.out.println("Node is a :  " + right.myList.getSelectedValue().getClass());
-            System.out.println("True");
-        }
 
         @Override
         public void internalFrameOpened(InternalFrameEvent e) {
