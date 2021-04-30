@@ -34,12 +34,14 @@ public class App extends JFrame{
         statusbar = new JToolBar();
         desktop = new JDesktopPane();
         list_ff = new ArrayList<FileFrame>();
+
         simple = new JButton("Simple");
         details = new JButton("Details");
         drives = File.listRoots();
         combo = new JComboBox(drives);
         currentDrive = drives[0].getAbsolutePath();
         statusLabel = new JLabel();
+        frame = new FileFrame(this);
 //        poplisten = new PopListener();
     }
 
@@ -62,7 +64,7 @@ public class App extends JFrame{
         // leaving as this
         //this.addMouseListener(poplisten);
 
-        frame = new FileFrame(this);
+
         frame.setLocation(desktop.getX(), desktop.getY()+100);
         list_ff.add(frame);
         desktop.add(list_ff.get(0));
@@ -75,6 +77,8 @@ public class App extends JFrame{
 
         File file = (File) combo.getSelectedItem();
         currentDrive = file.getAbsolutePath();
+
+        addActionListeners();
         this.add(panel);
         this.setSize(1000, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -101,6 +105,7 @@ public class App extends JFrame{
         copy = new JMenuItem("Copy");
         delete = new JMenuItem("Delete");
         run = new JMenuItem("Run");
+        run.addActionListener(new runActionListener(frame));
         exit = new JMenuItem("Exit");
         exit.addActionListener(new exitActionListener());
         file.add(rename);
@@ -202,5 +207,12 @@ public class App extends JFrame{
         tspace = "  Total Space: " + (drive.getTotalSpace()/1000000000) + "GB";
         String statusOut = cd + fspace + uspace + tspace;
         statusLabel.setText(statusOut);
+    }
+
+    public void addActionListeners(){
+        simple.addActionListener(new simpleActionListener(frame));
+        details.addActionListener(new detailsActionListener(frame));
+        expand_branch.addActionListener(new expandActionListener(frame));
+        collapse_branch.addActionListener(new collapseActionListener(frame));
     }
 }

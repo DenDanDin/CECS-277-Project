@@ -45,10 +45,6 @@ public class FileFrame extends JInternalFrame {
      */
     public FileFrame(App a){
         this.a = a;
-        a.simple.addActionListener(new simpleActionListener(this));
-        a.details.addActionListener(new detailsActionListener(this));
-        a.expand_branch.addActionListener(new expandActionListener(this));
-        a.collapse_branch.addActionListener(new collapseActionListener(this));
 
         frame = this;
         this.setLayout(new BorderLayout());

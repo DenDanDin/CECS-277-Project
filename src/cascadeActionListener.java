@@ -34,11 +34,12 @@ public class cascadeActionListener implements ActionListener {
             a.list_ff.get(i).setLocation(x,y);
             x += 25;
             y += 25;
+            try {
+                a.list_ff.get(i).setSelected(true);
+            } catch (PropertyVetoException propertyVetoException) {
+                propertyVetoException.printStackTrace();
+            }
         }
-        try {
-            a.list_ff.get(a.list_ff.size()-1).setSelected(true);
-        } catch (PropertyVetoException propertyVetoException) {
-            propertyVetoException.printStackTrace();
-        }
+
     }
 }
