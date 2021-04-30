@@ -1,5 +1,4 @@
-import javax.swing.JInternalFrame;
-import javax.swing.JSplitPane;
+import javax.swing.*;
 import javax.swing.event.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.ExpandVetoException;
@@ -39,6 +38,7 @@ public class FileFrame extends JInternalFrame {
     JInternalFrame frame;
     App a;
     MyFileNode frameDrive;
+
     /**
      * Creates a splitplane where the left side will be
      * the Directory Panel, and the right side will be the File Panel.
@@ -61,8 +61,7 @@ public class FileFrame extends JInternalFrame {
         left.dirtree.addTreeWillExpandListener(new FileFrameListener());
         right = new FilePanel(nodeSelected);
         right.tableOfFiles.addMouseListener(new FilePanelListener());
-
-        //right.myList.addListSelectionListener(new FileFrameListener());
+        //right.addMouseListener(new PopListener());
 
         splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, right);
         splitpane.setSize(600,400);
@@ -95,6 +94,10 @@ public class FileFrame extends JInternalFrame {
                 } catch(IOException ex){
                     System.out.println(ex.toString());
                 }
+            }
+            if(SwingUtilities.isRightMouseButton(e)){
+                PopUp menu = new PopUp(a);
+                menu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
     }

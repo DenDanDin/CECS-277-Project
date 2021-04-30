@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -17,7 +18,8 @@ public class App extends JFrame{
     JMenuItem expand_branch, collapse_branch;
     JComboBox combo;
     JLabel statusLabel;
-    MouseListener poplisten;
+//    MouseListener poplisten;
+    File copyFile;
     private File[] drives;
 
     /**
@@ -38,7 +40,7 @@ public class App extends JFrame{
         combo = new JComboBox(drives);
         currentDrive = drives[0].getAbsolutePath();
         statusLabel = new JLabel();
-        poplisten = new PopListener();
+//        poplisten = new PopListener();
     }
 
     /**
@@ -58,7 +60,7 @@ public class App extends JFrame{
         // **IMPORTANT**
         // Replace this with whatever variable the actual file explorer window is called, wasn't too sure so temporarily
         // leaving as this
-        this.addMouseListener(poplisten);
+        //this.addMouseListener(poplisten);
 
         frame = new FileFrame(this);
         frame.setLocation(desktop.getX(), desktop.getY()+100);
