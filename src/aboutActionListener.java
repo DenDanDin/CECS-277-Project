@@ -3,8 +3,10 @@ import java.awt.event.ActionListener;
 
 /**
  * Action Listener for the About Button.
+ *@author Daniel De Guzman and Andy Wong
  */
 public class aboutActionListener implements ActionListener {
+	
     /**
      * Creates a new About_Dialog box.
      * @param e - the event

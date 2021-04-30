@@ -75,7 +75,10 @@ public class About_Dialog extends javax.swing.JDialog {
 
         pack();
     }// </editor-fold>
-
+	
+	/**
+		Removes About Dialog from the Screen when Okay is pressed.
+	*/
     private void okayButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         this.setVisible(false);
