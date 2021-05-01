@@ -3,19 +3,32 @@ import javax.swing.tree.TreePath;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * ActionListener for the Expand Branch function.
+ * @author Daniel De Guzman and Andy Wong
+ */
 public class expandActionListener implements ActionListener {
 
-    FileFrame frame;
-    public expandActionListener(FileFrame frame){
-        this.frame = frame;
+    App app;
+
+    /**
+     * Constructor for expandActionListener
+     * @param a - the app to get the selected frame.
+     */
+    public expandActionListener(App a){
+        app = a;
     }
 
+    /**
+     * Expand the branch selected.
+     * @param e - the event.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(frame.isSelected() == true) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) frame.left.nodeSelected;
+        if(app.frame.isSelected() == true) {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) app.frame.left.nodeSelected;
             TreePath path = new TreePath(node.getPath());
-            frame.left.dirtree.expandPath(path);
+            app.frame.left.dirtree.expandPath(path);
         }
     }
 }

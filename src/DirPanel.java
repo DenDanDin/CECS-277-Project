@@ -1,16 +1,13 @@
-import com.sun.source.tree.Tree;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.event.*;
 import javax.swing.tree.*;
 import java.awt.*;
 import java.io.File;
-import java.util.ArrayList;
 
 /**
  * JPanel for the Directory Window.
+ * @author Daniel De Guzman and Andy Wong
  */
 public class DirPanel extends JPanel{
     JScrollPane scrollpane = new JScrollPane();
@@ -20,6 +17,7 @@ public class DirPanel extends JPanel{
 
     /**
      * Adds a scrollpane and a JTree to the directory window.
+     * @param root - the current drive.
      */
     public DirPanel(DefaultMutableTreeNode root){
         this.setLayout(new BorderLayout());
@@ -32,6 +30,7 @@ public class DirPanel extends JPanel{
 
     /**
      * Builds the Directory Tree.
+     * @param node - the root/current drive.
      */
     public void buildDirTree(DefaultMutableTreeNode node){
         nodeSelected = node;

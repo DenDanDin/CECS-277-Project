@@ -7,30 +7,54 @@
 import java.awt.event.ActionListener;
 
 /**
- *
+ * DialogBox for Copy and Rename in the File Menu.
  * @author Daniel De Guzman and Andy Wong
  */
 public class CopyRename_DialogBox extends javax.swing.JDialog {
+    /**
+     * Adds an ActionListener to the "Ok" button.
+     * @param buttonListener - the actionListener.
+     */
     public void addOkayListener(ActionListener buttonListener){
         OkayButton.addActionListener(buttonListener);
     }
 
+    /**
+     * Adds an ActionListener to the "Cancel" button.
+     * @param buttonListener - the actionListener.
+     */
     public void addCancelListener(ActionListener buttonListener){
         CancelButton.addActionListener(buttonListener);
     }
 
+    /**
+     * Returns the text in the To: Field.
+     * @return the text in the To: box.
+     */
     public String getToField(){
         return ToTextField.getText();
     }
 
+    /**
+     * Sets the From: Text Field.
+     * @param n - the text to set it to.
+     */
     public void setFromField(String n){
         FromTextField.setText(n);
     }
 
+    /**
+     * Sets the Current Directory Text.
+     * @param n - the text to set it to.
+     */
     public void setCurrentDirectory(String n){
         CDirectory.setText(n);
     }
 
+    /**
+     * Sets the Dialog Box title.
+     * @param n - the title to set it to.
+     */
     public void setBoxTitle(String n){
         this.setTitle(n);
     }

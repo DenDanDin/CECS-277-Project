@@ -3,31 +3,24 @@ import javax.swing.event.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.ExpandVetoException;
 import javax.swing.tree.TreePath;
-import javax.xml.crypto.Data;
 import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.dnd.DnDConstants;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDropEvent;
-import java.awt.dnd.DropTargetEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.image.ReplicateScaleFilter;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.CopyOption;
 import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.List;
 
-import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 
 /**
  * JInternalFrame for the Left and Right Side of the Directory Window.
+ * @author Daniel De Guzman and Andy Wong
  */
 public class FileFrame extends JInternalFrame {
 
@@ -44,6 +37,7 @@ public class FileFrame extends JInternalFrame {
     /**
      * Creates a splitplane where the left side will be
      * the Directory Panel, and the right side will be the File Panel.
+     * @param a - the app to get information from.
      */
     public FileFrame(App a){
         this.a = a;
@@ -60,11 +54,11 @@ public class FileFrame extends JInternalFrame {
         left.dirtree.addTreeWillExpandListener(new FileFrameListener());
         right = new FilePanel(nodeSelected);
         right.tableOfFiles.addMouseListener(new FilePanelListener());
-        //right.addMouseListener(new PopListener());
 
         splitpane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT, left, right);
         splitpane.setSize(600,400);
         right.tableOfFiles.setDragEnabled(true);
+
         this.setDropTarget(new MyDropTarget());
         this.addInternalFrameListener(new FileFrameListener());
         this.getContentPane().add(splitpane);
@@ -75,15 +69,21 @@ public class FileFrame extends JInternalFrame {
         this.setVisible(true);
     }
 
+    /**
+     * MouseListener for the File Panel.
+     * @author Daniel De Guzman and Andy Wong
+     */
     class FilePanelListener extends MouseAdapter {
+        /**
+         * Determines if the mouse was double clicked to open a file,
+         * or if the mouse was right clicked to show the popUp menu.
+         * @param e - the mouse event.
+         */
+        @Override
         public void mouseClicked(MouseEvent e){
             if(e.getClickCount() == 2){
                 int row = right.tableOfFiles.getSelectedRow();
                 String name = (String) right.tableOfFiles.getModel().getValueAt(row, 0);  //returns the name of file.
-                System.out.println(name);
-//                String filePath = (String) right.tableOfFiles.getModel().getValueAt(row, 3);
-//                System.out.println("FILE PATH: " + filePath);
-                //MyFileNode file = (MyFileNode) left.nodeSelected.getUserObject();
                 String fileName = title + File.separator + name;
                 System.out.println("open: " + fileName);
                 File temp = new File(fileName);
@@ -100,8 +100,16 @@ public class FileFrame extends JInternalFrame {
         }
     }
 
+    /**
+     * Listeners for the FileFrame to tell if node has been selected, or a tree will expand.
+     * @author Daniel De Guzman and Andy Wong
+     */
     class FileFrameListener implements TreeSelectionListener, TreeWillExpandListener, InternalFrameListener {
 
+        /**
+         * Add the current directory's children if the tree will expand.
+         * @param event - the event.
+         */
         @Override
         public void treeWillExpand(TreeExpansionEvent event) {
             TreePath e = event.getPath();
@@ -113,6 +121,10 @@ public class FileFrame extends JInternalFrame {
         public void treeWillCollapse(TreeExpansionEvent event) throws ExpandVetoException {
         }
 
+        /**
+         * Update variables for when a node in the tree (left side) is seleceted.
+         * @param e - the event.
+         */
         @Override
         public void valueChanged(TreeSelectionEvent e) {
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) left.dirtree.getLastSelectedPathComponent();
@@ -136,6 +148,10 @@ public class FileFrame extends JInternalFrame {
         public void internalFrameClosing(InternalFrameEvent e) {
         }
 
+        /**
+         * Remove the JInternalFrame from the App's array list.
+         * @param e - the event.
+         */
         @Override
         public void internalFrameClosed(InternalFrameEvent e) {
             a.list_ff.remove(this);
@@ -149,6 +165,11 @@ public class FileFrame extends JInternalFrame {
         public void internalFrameDeiconified(InternalFrameEvent e) {
         }
 
+        /**
+         * Change app's focus frame when another frame is activated.
+         * Updates the statusbar of the App.
+         * @param e - the event.
+         */
         @Override
         public void internalFrameActivated(InternalFrameEvent e) {
             System.out.println("Activation");
@@ -164,11 +185,21 @@ public class FileFrame extends JInternalFrame {
         }
     }
 
+    /**
+     * DropTarget class to handle Drag and Drop.
+     * @author Daniel De Guzman and Andy Wong
+     */
     class MyDropTarget extends DropTarget {
+        /**
+         * Allow and process drag and drop from External Desktop and
+         * between other FileFrames.
+         * @param evt - the event.
+         */
         public void drop(DropTargetDropEvent evt){
             try{
                 evt.acceptDrop(DnDConstants.ACTION_COPY);
                 List<Object> result;
+                //if DnD is between FileFrames.
                 if(evt.getTransferable().isDataFlavorSupported(DataFlavor.stringFlavor)){
 
                     String temp = (String)evt.getTransferable().getTransferData(DataFlavor.stringFlavor);
@@ -176,7 +207,6 @@ public class FileFrame extends JInternalFrame {
                     String[] rowComponents;
                     for(int i = 0; i < nextRow.length; i++){
                         rowComponents = nextRow[i].split("\\t");
-
                         //rowComponents[3] = file Parent Path ... rowComponents[0] = file name.
                         File drag = new File(rowComponents[3] + File.separator + rowComponents[0]);
                         MyFileNode mfn = (MyFileNode) left.nodeSelected.getUserObject();
@@ -198,6 +228,7 @@ public class FileFrame extends JInternalFrame {
                         right.model.addRow(rowComponents);
                     }
                 }
+                //DnD is from an external source (a desktop).
                 else {
                     result = (List) evt.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
                     for (Object o : result) {

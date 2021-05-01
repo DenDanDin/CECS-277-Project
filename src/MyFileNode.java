@@ -1,4 +1,9 @@
 import java.io.File;
+
+/**
+ * MyFileNode class.
+ * @author Daniel De Guzman and Andy Wong
+ */
 public class MyFileNode {
     File file;
     String filename;
@@ -12,15 +17,6 @@ public class MyFileNode {
         this.file = new File(filename);
     }
 
-    /**
-     * Constructor for MyFileNode
-     * @param name - the name of the file.
-     * @param f - the file.
-     */
-    public MyFileNode(String name, File f){
-        this.filename = name;
-        this.file = f;
-    }
 
     /**
      * Returns the file of MyFileNode.

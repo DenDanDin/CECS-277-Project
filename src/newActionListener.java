@@ -4,14 +4,14 @@ import java.io.File;
 
 /**
  * ActionListener for the New button.
+ * @author Daniel De Guzman and Andy Wong
  */
 public class newActionListener implements ActionListener {
     private App a;
 
     /**
-     * Constructor that passes an App.
-     * (App is used to access currentDrive and desktop.. change later).
-     * @param a - the App.
+     * Constructor for the newActionListener.
+     * @param a - the App (to get information from).
      */
     public newActionListener(App a){
         this.a = a;

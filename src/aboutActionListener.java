@@ -3,7 +3,7 @@ import java.awt.event.ActionListener;
 
 /**
  * Action Listener for the About Button.
- *@author Daniel De Guzman and Andy Wong
+ * @author Daniel De Guzman and Andy Wong
  */
 public class aboutActionListener implements ActionListener {
 	

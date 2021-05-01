@@ -9,14 +9,14 @@ import java.awt.event.ActionListener;
  */
 public class collapseActionListener implements ActionListener {
 	
-    FileFrame frame;
+    App app;
 	/**
 		Constructor for collapseActionListener.
 		
-		@param frame - the frame that contains the branch to collapse.
+		@param a - the app to get the selected frame.
 	*/
-    public collapseActionListener(FileFrame frame){
-        this.frame = frame;
+    public collapseActionListener(App a){
+        app = a;
     }
 
 	/**
@@ -26,10 +26,10 @@ public class collapseActionListener implements ActionListener {
 	*/
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(frame.isSelected() == true) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) frame.left.nodeSelected;
+        if(app.frame.isSelected() == true) {
+            DefaultMutableTreeNode node = (DefaultMutableTreeNode) app.frame.left.nodeSelected;
             TreePath path = new TreePath(node.getPath());
-            frame.left.dirtree.collapsePath(path);
+            app.frame.left.dirtree.collapsePath(path);
         }
     }
 }

@@ -4,14 +4,30 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
+/**
+ * ActionListener for the copy function in the file menu.
+ * @author Daniel De Guzman and Andy Wong
+ */
 public class copyActionListener implements ActionListener {
     App app;
     String currentDirectory, oldName, newDirectory;
     CopyRename_DialogBox box;
     int rowSelected;
+
+    /**
+     * Constructor for a copyActionListener.
+     * (App is used to access selected nodes).
+     * @param a - the app.
+     */
     public copyActionListener(App a){
         app = a;
     }
+
+    /**
+     * Displays a CopyRename_DialogBox that prompts the user to input
+     * the path + file name of where to copy.
+     * @param e - the event.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Copy");
@@ -28,7 +44,17 @@ public class copyActionListener implements ActionListener {
         box.setVisible(true);
     }
 
+    /**
+     * ActionListener for "Ok" button in CopyRename_DialogBox.
+     * @author Daniel De Guzman and Andy Wong
+     */
     class okayActionListener implements ActionListener{
+        /**
+         * Copies the file to the given path+file name the user
+         * inputs in the To: box.
+         * Exits DialogBox after attempted copy.
+         * @param e - the event.
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("You Pressed Okay");
@@ -41,23 +67,20 @@ public class copyActionListener implements ActionListener {
             } catch (IOException ioException) {
                 System.out.println("Not able to copy");
             }
-//            newName = currentDirectory + File.separator + box.getToField();
-//            File renameFile = new File(currentDirectory + File.separator + oldName);
-//            System.out.println("Old File: " + renameFile.getAbsolutePath());
-//            System.out.println("Renamed File: " + newName);
-//            boolean success = renameFile.renameTo(new File(newName));
-//            if(success){
-//                System.out.println("File Renamed");
-//                app.frame.right.readFiles();
-//            }
-//            else{
-//                System.out.println("Not able to rename");
-//            }
             box.setVisible(false);
         }
     }
 
+    /**
+     * ActionListener for "Cancel" button in CopyRename_DialogBox.
+     * @author Daniel De Guzman and Andy Wong
+     */
     class cancelActionListener implements ActionListener{
+
+        /**
+         * Sets DialogBox not visible.
+         * @param e - the event.
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("You Pressed Cancel");

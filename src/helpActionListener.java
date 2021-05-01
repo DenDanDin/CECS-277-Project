@@ -1,11 +1,12 @@
-/**
- * ActionListener for Help function in File Menu.
- */
-
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * ActionListener for Help function in File Menu.
+ * @author Daniel De Guzman and Andy Wong
+ */
 public class helpActionListener implements ActionListener {
+
     /**
      * Displays Help Screen.
      * @param e - the event.

@@ -2,17 +2,14 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.File;
-import java.nio.file.Path;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 
 /**
- * JPanel for the File Panel Window
+ * JPanel for the File Panel Window (right side).
+ * @author Daniel De Guzman and Andy Wong
  */ 
 public class FilePanel extends JPanel {
     private JScrollPane scrollpane = new JScrollPane();
@@ -24,8 +21,10 @@ public class FilePanel extends JPanel {
     private int columnMinWidth;
     private int columnMaxWidth;
     private int columnWidth;
+
     /**
-     *  Adds a JList and scroll pane to the File Panel
+     * Constructor for a FilePanel.
+     * @param node - the node to display files.
      */
     public FilePanel(DefaultMutableTreeNode node){
         this.setLayout(new BorderLayout());
@@ -36,7 +35,6 @@ public class FilePanel extends JPanel {
                 return false;
             }
         };
-
 
         tableOfFiles = new JTable(model);
         for(String name : columnNames){
@@ -62,8 +60,7 @@ public class FilePanel extends JPanel {
     }
 
     /**
-     *  Method to list files.  Iterates through files and adds to DefaultListModel for display.
-     *
+     * Shows the full file details (Name, Date Modified, Size).
      */
     public void showFileDetails(){
         for(int i = 0; i < columnNames.length-1; i++){
@@ -74,6 +71,9 @@ public class FilePanel extends JPanel {
         readFiles();
     }
 
+    /**
+     * Only shows the file's name.
+     */
     public void showFileSimple(){
         for(int i = 1; i < columnNames.length; i++){
             columnModel.getColumn(i).setMinWidth(0);
@@ -83,6 +83,9 @@ public class FilePanel extends JPanel {
         tableOfFiles.setModel(model);
     }
 
+    /**
+     * Reads the Files and adds them to the JTable.
+     */
     public void readFiles(){
         MyFileNode mfn = (MyFileNode) selectedNode.getUserObject();
         File[] files = mfn.getFile().listFiles();

@@ -1,11 +1,15 @@
 import javax.swing.*;
-import javax.swing.tree.DefaultMutableTreeNode;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.util.ArrayList;
 
-
+/**
+ * Main Window that constructs everything but the FileFrame.
+ * Holds some information needed by the user like copy and paste files.
+ *
+ * @author Daniel De Guzman and Andy Wong
+ */
 public class App extends JFrame{
     JPanel panel, topPanel;
     JMenuBar menubar;
@@ -18,7 +22,6 @@ public class App extends JFrame{
     JMenuItem expand_branch, collapse_branch;
     JComboBox combo;
     JLabel statusLabel;
-//    MouseListener poplisten;
     File copyFile;
     String pasteDir;
     private File[] drives;
@@ -43,7 +46,6 @@ public class App extends JFrame{
         currentDrive = drives[0].getAbsolutePath();
         statusLabel = new JLabel();
         frame = new FileFrame(this);
-//        poplisten = new PopListener();
     }
 
     /**
@@ -58,12 +60,6 @@ public class App extends JFrame{
         topPanel.add(menubar, BorderLayout.NORTH);
         topPanel.setBackground(Color.BLUE);
         panel.add(topPanel, BorderLayout.NORTH);
-        
-        // Set window to be able to right click
-        // **IMPORTANT**
-        // Replace this with whatever variable the actual file explorer window is called, wasn't too sure so temporarily
-        // leaving as this
-        //this.addMouseListener(poplisten);
 
 
         frame.setLocation(desktop.getX(), desktop.getY()+100);
@@ -109,7 +105,7 @@ public class App extends JFrame{
         delete = new JMenuItem("Delete");
         delete.addActionListener(new deleteActionListener(this));
         run = new JMenuItem("Run");
-        run.addActionListener(new runActionListener(frame));
+        run.addActionListener(new runActionListener(this));
         exit = new JMenuItem("Exit");
         exit.addActionListener(new exitActionListener());
         file.add(rename);
@@ -199,6 +195,10 @@ public class App extends JFrame{
         statusbar.add(statusLabel);
     }
 
+    /**
+     * Resets the status bar information.
+     * @param drive - the drive to get information of.
+     */
     public void resetStatus(File drive){
         String cd, fspace, uspace, tspace;
         currentDrive = drive.getAbsolutePath();
@@ -213,10 +213,13 @@ public class App extends JFrame{
         statusLabel.setText(statusOut);
     }
 
+    /**
+     * Adds ActionListeners for simple, details, expand/collapse branch.
+     */
     public void addActionListeners(){
-        simple.addActionListener(new simpleActionListener(frame));
-        details.addActionListener(new detailsActionListener(frame));
-        expand_branch.addActionListener(new expandActionListener(frame));
-        collapse_branch.addActionListener(new collapseActionListener(frame));
+        simple.addActionListener(new simpleActionListener(this));
+        details.addActionListener(new detailsActionListener(this));
+        expand_branch.addActionListener(new expandActionListener(this));
+        collapse_branch.addActionListener(new collapseActionListener(this));
     }
 }

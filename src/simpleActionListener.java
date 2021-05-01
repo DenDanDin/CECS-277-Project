@@ -3,17 +3,18 @@ import java.awt.event.ActionListener;
 
 /**
  * ActionListener for the Simple button.
+ * @author Daniel De Guzman and Andy Wong
  */
 public class simpleActionListener implements ActionListener {
 
-    FileFrame frame;
+    App app;
 
     /**
      * Constructor for simpleActionListener.
-     * @param frame - the frame to edit when button is pressed.
+     * @param a - the app to get the selected frame.
      */
-    public simpleActionListener(FileFrame frame){
-        this.frame = frame;
+    public simpleActionListener(App a){
+        app = a;
     }
     /**
      * Displays the FilePanel with only the file name.
@@ -22,7 +23,7 @@ public class simpleActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getActionCommand().equals("Simple")) {
-            frame.right.showFileSimple();
+            app.frame.right.showFileSimple();
         }
     }
 }

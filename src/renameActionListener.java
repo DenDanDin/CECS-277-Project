@@ -2,17 +2,32 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+/**
+ * ActionListener for the rename function.
+ * @author Daniel De Guzman and Andy Wong
+ */
 public class renameActionListener implements ActionListener {
     App app;
     String currentDirectory, oldName, newName;
     CopyRename_DialogBox box;
     int rowSelected;
+
+    /**
+     * Constructor for the rename function.
+     * @param a - the app to get information from.
+     */
     public renameActionListener(App a){
         app = a;
     }
+
+    /**
+     * Displays a Rename DialogBox that will prompt the user to enter
+     * the complete path + file name to rename to.
+     * @param e - the event.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("rename");
+        System.out.println("Rename");
         box = new CopyRename_DialogBox(app, true);
         box.addOkayListener(new okayActionListener());
         box.addCancelListener(new cancelActionListener());
@@ -26,7 +41,16 @@ public class renameActionListener implements ActionListener {
         box.setVisible(true);
     }
 
+    /**
+     * ActionListener for Ok button.
+     * @author Daniel De Guzman and Andy Wong
+     */
     class okayActionListener implements ActionListener{
+
+        /**
+         * Renames the selected file to the user's path in To: field.
+         * @param e - the event.
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("You Pressed Okay");
@@ -46,7 +70,15 @@ public class renameActionListener implements ActionListener {
         }
     }
 
+    /**
+     * ActionListener for the Cancel button.
+     * @author Daniel De Guzman and Andy Wong
+     */
     class cancelActionListener implements ActionListener{
+        /**
+         * Exits the Dialog Box.
+         * @param e
+         */
         @Override
         public void actionPerformed(ActionEvent e) {
             System.out.println("You Pressed Cancel");

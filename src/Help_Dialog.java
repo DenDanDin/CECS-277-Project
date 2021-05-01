@@ -1,6 +1,6 @@
 /**
  *  Dialog for Help Function in File Menu.
- * @author Daniel De Guzman and Andy Wong
+ *  @author Daniel De Guzman and Andy Wong
  */
 public class Help_Dialog extends javax.swing.JDialog {
 
@@ -65,6 +65,10 @@ public class Help_Dialog extends javax.swing.JDialog {
         pack();
     }// </editor-fold>
 
+    /**
+     * Exits the Dialog Box when pressed.
+     * @param evt - the event.
+     */
     private void gotItButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
         this.setVisible(false);
