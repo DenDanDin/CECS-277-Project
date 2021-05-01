@@ -12,15 +12,14 @@ public class pasteActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("paste");
-        MyFileNode drive = (MyFileNode) app.frame.left.nodeSelected.getUserObject();
-        String newLocation = drive.getFile().getAbsolutePath();
-        File paste = new File(newLocation + File.separator + app.copyFile.getName());
-        System.out.println(paste.getAbsolutePath());
+        String dir = app.pasteDir;
+        File paste = new File(dir + File.separator + app.copyFile.getName());
+        System.out.println("PASTE: " + paste.getAbsolutePath());
+        System.out.println("PASTE FRAME:  " + app.frame.title);
         try{
             Files.copy(app.copyFile.toPath(), paste.toPath());
             app.frame.right.showFileDetails();
-            //ADD TO FILE FRAME.
-            //app.copyFile = null;
+            app.copyFile = null;    //reset copyFile.
         } catch(Exception ex){
             System.out.println("Not able to copy");
         }

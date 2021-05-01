@@ -15,6 +15,6 @@ public class copyActionListener implements ActionListener {
         String name = (String) app.frame.right.tableOfFiles.getModel().getValueAt(row, 0);
         MyFileNode file = (MyFileNode) app.frame.left.nodeSelected.getUserObject();
         app.copyFile = new File(file.getFileName() + File.separator + name);
-        System.out.println(app.copyFile.getAbsolutePath());
+        System.out.println("COPY: " + app.copyFile.getAbsolutePath());
     }
 }

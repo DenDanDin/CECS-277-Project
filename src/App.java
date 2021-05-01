@@ -20,6 +20,7 @@ public class App extends JFrame{
     JLabel statusLabel;
 //    MouseListener poplisten;
     File copyFile;
+    String pasteDir;
     private File[] drives;
 
     /**

@@ -38,6 +38,8 @@ public class FileFrame extends JInternalFrame {
     JInternalFrame frame;
     App a;
     MyFileNode frameDrive;
+    PopUp menu;
+    String title;
 
     /**
      * Creates a splitplane where the left side will be
@@ -45,6 +47,7 @@ public class FileFrame extends JInternalFrame {
      */
     public FileFrame(App a){
         this.a = a;
+        menu = new PopUp(a);
 
         frame = this;
         this.setLayout(new BorderLayout());
@@ -80,8 +83,8 @@ public class FileFrame extends JInternalFrame {
                 System.out.println(name);
 //                String filePath = (String) right.tableOfFiles.getModel().getValueAt(row, 3);
 //                System.out.println("FILE PATH: " + filePath);
-                MyFileNode file = (MyFileNode) left.nodeSelected.getUserObject();
-                String fileName = file.getFileName() + File.separator + name;
+                //MyFileNode file = (MyFileNode) left.nodeSelected.getUserObject();
+                String fileName = title + File.separator + name;
                 System.out.println("open: " + fileName);
                 File temp = new File(fileName);
                 Desktop desktop = Desktop.getDesktop();
@@ -92,7 +95,6 @@ public class FileFrame extends JInternalFrame {
                 }
             }
             if(SwingUtilities.isRightMouseButton(e)){
-                PopUp menu = new PopUp(a);
                 menu.show(e.getComponent(), e.getX(), e.getY());
             }
         }
@@ -119,7 +121,9 @@ public class FileFrame extends JInternalFrame {
             right.selectedNode = node;
             right.showFileDetails();
             MyFileNode mfn = (MyFileNode) node.getUserObject();
-            frame.setTitle(mfn.getFileName());
+            title = mfn.getFileName();
+            a.pasteDir = mfn.getFileName();
+            frame.setTitle(title);
             System.out.println(mfn.toString() + "; isDirectory(): " + mfn.isDirectory() + "; isSub(): " + mfn.hasSubDirectory() + "; Class: " + mfn.getClass());
         }
 
@@ -148,6 +152,8 @@ public class FileFrame extends JInternalFrame {
         @Override
         public void internalFrameActivated(InternalFrameEvent e) {
             System.out.println("Activation");
+            a.frame = FileFrame.this;
+            System.out.println(a.frame.title);
             MyFileNode node = (MyFileNode) nodeSelected.getUserObject();
             File current = node.getFile();
             a.resetStatus(current);
