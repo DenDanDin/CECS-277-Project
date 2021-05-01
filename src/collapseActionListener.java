@@ -1,4 +1,5 @@
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,9 +28,9 @@ public class collapseActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(app.frame.isSelected() == true) {
-            DefaultMutableTreeNode node = (DefaultMutableTreeNode) app.frame.left.nodeSelected;
-            TreePath path = new TreePath(node.getPath());
-            app.frame.left.dirtree.collapsePath(path);
+            System.out.println("Collapse");
+            int row = app.frame.left.dirtree.getLeadSelectionRow();
+            app.frame.left.dirtree.collapseRow(row);
         }
     }
 }
