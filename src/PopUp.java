@@ -16,11 +16,11 @@ public class PopUp extends JPopupMenu{
 
 		// Creating them as JMenuItems
 		copy = new JMenuItem("Copy");
-		copy.addActionListener(new copyActionListener(app));
+		copy.addActionListener(new copyPopUpActionListener(app));
 		paste = new JMenuItem("Paste");
 		paste.addActionListener(new pasteActionListener(app));
 		rename = new JMenuItem("Rename");
-		rename.addActionListener(new renameActionListener());
+		rename.addActionListener(new renameActionListener(app));
 		delete = new JMenuItem("Delete");
 		delete.addActionListener(new deleteActionListener(app));
 		// Adding to the JPopUpMenu

@@ -48,8 +48,8 @@ public class FileFrame extends JInternalFrame {
     public FileFrame(App a){
         this.a = a;
         menu = new PopUp(a);
-
         frame = this;
+        title = a.currentDrive;
         this.setLayout(new BorderLayout());
         MyFileNode frameDrive = new MyFileNode(a.currentDrive);
         nodeSelected = new DefaultMutableTreeNode(frameDrive);

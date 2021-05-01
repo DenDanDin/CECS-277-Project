@@ -103,8 +103,11 @@ public class App extends JFrame{
         JMenu file = new JMenu("File");
         JMenuItem rename, copy, delete, run, exit;
         rename = new JMenuItem("Rename");
+        rename.addActionListener(new renameActionListener(this));
         copy = new JMenuItem("Copy");
+        copy.addActionListener(new copyActionListener(this));
         delete = new JMenuItem("Delete");
+        delete.addActionListener(new deleteActionListener(this));
         run = new JMenuItem("Run");
         run.addActionListener(new runActionListener(frame));
         exit = new JMenuItem("Exit");
