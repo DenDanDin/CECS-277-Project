@@ -27,7 +27,7 @@ public class runActionListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Desktop desktop = Desktop.getDesktop();
         int row = app.frame.right.tableOfFiles.getSelectedRow();
-        String name = (String) app.frame.right.tableOfFiles.getModel().getValueAt(row, 0);
+        String name = (String) app.frame.right.tableOfFiles.getModel().getValueAt(row, 1);
         MyFileNode file = (MyFileNode) app.frame.left.nodeSelected.getUserObject();
         try{
             File fileToOpen = new File(file.getFileName() + File.separator + name);

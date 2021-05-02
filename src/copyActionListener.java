@@ -39,7 +39,7 @@ public class copyActionListener implements ActionListener {
         currentDirectory = app.frame.title;
         box.setCurrentDirectory(currentDirectory);
         rowSelected = app.frame.right.tableOfFiles.getSelectedRow();
-        oldName = (String) app.frame.right.tableOfFiles.getModel().getValueAt(rowSelected, 0);
+        oldName = (String) app.frame.right.tableOfFiles.getModel().getValueAt(rowSelected, 1);
         box.setFromField(oldName);
         box.setVisible(true);
     }

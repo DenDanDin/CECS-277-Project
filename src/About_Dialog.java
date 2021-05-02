@@ -5,6 +5,14 @@
 public class About_Dialog extends javax.swing.JDialog {
 
     /**
+     * Sets the box title.
+     * @param n - the title.
+     */
+    public void setBoxTitle(String n){
+        this.setTitle(n);
+    }
+
+    /**
      * Creates new form About_Dialog
      */
     public About_Dialog(java.awt.Frame parent, boolean modal) {

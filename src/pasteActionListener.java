@@ -26,7 +26,7 @@ public class pasteActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("paste");
-        String dir = app.pasteDir;
+        String dir = app.frame.title;
         File paste = new File(dir + File.separator + app.copyFile.getName());
         System.out.println("PASTE: " + paste.getAbsolutePath());
         try{

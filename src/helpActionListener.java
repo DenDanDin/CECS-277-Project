@@ -14,6 +14,8 @@ public class helpActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         Help_Dialog hd = new Help_Dialog(null, true);
+        hd.setBoxTitle("Help --> View New Drive");
+        hd.setHelpText("Change toolbar --> New Window");
         hd.setVisible(true);
     }
 }

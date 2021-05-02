@@ -4,6 +4,17 @@
  */
 public class Help_Dialog extends javax.swing.JDialog {
 
+    public void setBoxTitle(String n){
+        this.setTitle(n);
+    }
+    /**
+     * Sets the text of help message.
+     * @param n - the text to set it to.
+     */
+    public void setHelpText(String n){
+        helpText.setText(n);
+    }
+
     /**
      * Creates new form Help_Dialog
      */
