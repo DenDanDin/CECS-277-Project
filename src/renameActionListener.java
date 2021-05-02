@@ -56,7 +56,17 @@ public class renameActionListener implements ActionListener {
             System.out.println("Ok Pressed");
             newName = box.getToField();
             File renameFile = new File(currentDirectory + File.separator + oldName);
-            boolean success = renameFile.renameTo(new File(newName));
+            File newFile = new File(newName);
+            boolean success;
+            if(newFile.isAbsolute()){   //user provided complete path + file name.
+                success = renameFile.renameTo(newFile);
+            }
+            else{   //user provided just the file name.
+                System.out.println("newFile: " + newFile.getAbsolutePath());
+                System.out.println("Rename to: " + currentDirectory + File.separator + newFile.getName());
+                success = renameFile.renameTo(new File(currentDirectory + File.separator + newFile.getName()));
+            }
+
             if(success){
                 System.out.println("File Renamed to: " + renameFile.getAbsolutePath());
                 app.frame.right.readFiles();

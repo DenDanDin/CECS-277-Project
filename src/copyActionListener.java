@@ -61,6 +61,9 @@ public class copyActionListener implements ActionListener {
             newDirectory = box.getToField();
             File copyFile = new File(currentDirectory + File.separator + oldName);
             File newFile = new File(newDirectory);
+            if(newFile.isDirectory()){  //user provided directory path... else --> user provided directory path and file name.
+                newFile = new File(newFile + File.separator +  copyFile.getName());
+            }
             try {
                 Files.copy(copyFile.toPath(), newFile.toPath());
                 System.out.println("Copied to: " + newFile.toPath());
