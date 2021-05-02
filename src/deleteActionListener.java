@@ -28,7 +28,7 @@ public class deleteActionListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         System.out.println("Delete");
         int row = app.frame.right.tableOfFiles.getSelectedRow();
-        String name = (String) app.frame.right.tableOfFiles.getModel().getValueAt(row, 0);
+        String name = (String) app.frame.right.tableOfFiles.getModel().getValueAt(row, 1);
         File deleteFile = new File(app.frame.title + File.separator + name);
         deleting = new JOptionPane();
         int choice = JOptionPane.showConfirmDialog(null, "Delete " + deleteFile.getAbsolutePath(), "Deleting!!", JOptionPane.YES_NO_OPTION);

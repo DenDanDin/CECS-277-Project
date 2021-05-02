@@ -17,10 +17,12 @@ public class FilePanel extends JPanel {
     DefaultTableModel model;
     TableColumnModel columnModel;
     DefaultMutableTreeNode selectedNode;
-    String[] columnNames = {"Name", "Date", "Size", "ParentPath"};
+    String[] columnNames = {"File Type", "Name", "Date", "Size", "ParentPath"};
     private int columnMinWidth;
     private int columnMaxWidth;
     private int columnWidth;
+    ImageIcon fileIcon = new ImageIcon("src/fileIcon.png");
+    ImageIcon folderIcon = new ImageIcon("src/folderIcon.png");
 
     /**
      * Constructor for a FilePanel.
@@ -30,6 +32,20 @@ public class FilePanel extends JPanel {
         this.setLayout(new BorderLayout());
         this.selectedNode = node;
         model = new DefaultTableModel(){
+
+            @Override
+            public Class getColumnClass(int column){
+                switch(column){
+                    case 0: return ImageIcon.class;
+                    case 1:
+                    case 2:
+                    case 3:
+                    case 4:
+                        return String.class;
+                    default: return Object.class;
+                }
+            }
+
             @Override
             public boolean isCellEditable(int row, int column){
                 return false;
@@ -41,13 +57,18 @@ public class FilePanel extends JPanel {
             model.addColumn(name);
         }
         columnModel = tableOfFiles.getColumnModel();
-        columnMinWidth = columnModel.getColumn(0).getMinWidth();
-        columnMaxWidth = columnModel.getColumn(0).getMaxWidth();
-        columnWidth = columnModel.getColumn(0).getWidth();
 
-        columnModel.getColumn(3).setMinWidth(0);
-        columnModel.getColumn(3).setMaxWidth(0);
-        columnModel.getColumn(3).setWidth(0);
+        columnModel.getColumn(0).setMinWidth(20);
+        columnModel.getColumn(0).setMaxWidth(40);
+        columnModel.getColumn(0).setWidth(30);
+
+        columnMinWidth = columnModel.getColumn(1).getMinWidth();
+        columnMaxWidth = columnModel.getColumn(1).getMaxWidth();
+        columnWidth = columnModel.getColumn(1).getWidth();
+
+        columnModel.getColumn(4).setMinWidth(0);
+        columnModel.getColumn(4).setMaxWidth(0);
+        columnModel.getColumn(4).setWidth(0);
 
         tableOfFiles.setShowGrid(false);
         tableOfFiles.setTableHeader(null);
@@ -63,7 +84,8 @@ public class FilePanel extends JPanel {
      * Shows the full file details (Name, Date Modified, Size).
      */
     public void showFileDetails(){
-        for(int i = 0; i < columnNames.length-1; i++){
+
+        for(int i = 1; i < columnNames.length-1; i++){
             columnModel.getColumn(i).setMinWidth(columnMinWidth);
             columnModel.getColumn(i).setMaxWidth(columnMaxWidth);
             columnModel.getColumn(i).setWidth(columnWidth);
@@ -75,7 +97,7 @@ public class FilePanel extends JPanel {
      * Only shows the file's name.
      */
     public void showFileSimple(){
-        for(int i = 1; i < columnNames.length; i++){
+        for(int i = 2; i < columnNames.length; i++){
             columnModel.getColumn(i).setMinWidth(0);
             columnModel.getColumn(i).setMaxWidth(0);
             columnModel.getColumn(i).setWidth(0);
@@ -94,7 +116,7 @@ public class FilePanel extends JPanel {
             for(int i = 0; i < files.length; i++){
                 if(files[i].isDirectory()){
                     String parentPath = files[i].toPath().getParent().toString();
-                    Object[] data = {files[i].getName(), "", "", parentPath};
+                    Object[] data = {folderIcon, files[i].getName(), "", "", parentPath};
                     model.addRow(data);
                 }
                 else{
@@ -103,7 +125,7 @@ public class FilePanel extends JPanel {
                     DecimalFormat dformat = new DecimalFormat("#,###");
                     String sizeOfFile = dformat.format(files[i].length());
                     String parentPath = files[i].toPath().getParent().toString();
-                    Object[] data = {files[i].getName(), dateModified, sizeOfFile, parentPath};
+                    Object[] data = {fileIcon, files[i].getName(), dateModified, sizeOfFile, parentPath};
                     model.addRow(data);
                 }
             }

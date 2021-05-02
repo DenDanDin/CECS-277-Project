@@ -34,12 +34,15 @@ public class FileFrame extends JInternalFrame {
     PopUp menu;
     String title;
 
+
     /**
      * Creates a splitplane where the left side will be
      * the Directory Panel, and the right side will be the File Panel.
      * @param a - the app to get information from.
      */
     public FileFrame(App a){
+
+
         this.a = a;
         menu = new PopUp(a);
         frame = this;
@@ -83,7 +86,7 @@ public class FileFrame extends JInternalFrame {
         public void mouseClicked(MouseEvent e){
             if(e.getClickCount() == 2){
                 int row = right.tableOfFiles.getSelectedRow();
-                String name = (String) right.tableOfFiles.getModel().getValueAt(row, 0);  //returns the name of file.
+                String name = (String) right.tableOfFiles.getModel().getValueAt(row, 1);  //returns the name of file.
                 String fileName = title + File.separator + name;
                 System.out.println("open: " + fileName);
                 File temp = new File(fileName);
@@ -207,8 +210,8 @@ public class FileFrame extends JInternalFrame {
                     String[] rowComponents;
                     for(int i = 0; i < nextRow.length; i++){
                         rowComponents = nextRow[i].split("\\t");
-                        //rowComponents[3] = file Parent Path ... rowComponents[0] = file name.
-                        File drag = new File(rowComponents[3] + File.separator + rowComponents[0]);
+                        //rowComponents[4] = file Parent Path ... rowComponents[1] = file name.
+                        File drag = new File(rowComponents[4] + File.separator + rowComponents[1]);
                         MyFileNode mfn = (MyFileNode) left.nodeSelected.getUserObject();
                         File dropDrive = mfn.getFile();
                         //dropDrive is the directory of where you want to drop.
@@ -242,14 +245,14 @@ public class FileFrame extends JInternalFrame {
                         Files.copy(destination.toPath(), copy.toPath());
 
                         if (fileAdded.isDirectory()) {
-                            Object[] data = {fileAdded.getName(), "", ""};
+                            Object[] data = {a.frame.right.folderIcon, fileAdded.getName(), "", ""};
                             right.model.addRow(data);
                         } else {
                             SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
                             String dateModified = formatter.format(fileAdded.lastModified());
                             DecimalFormat dformat = new DecimalFormat("#,###");
                             String sizeOfFile = dformat.format(fileAdded.length());
-                            Object[] data = {fileAdded.getName(), dateModified, sizeOfFile};
+                            Object[] data = {a.frame.right.fileIcon, fileAdded.getName(), dateModified, sizeOfFile};
                             right.model.addRow(data);
                         }
                     }
