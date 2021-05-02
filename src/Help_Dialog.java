@@ -82,6 +82,7 @@ public class Help_Dialog extends javax.swing.JDialog {
      */
     private void gotItButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        System.out.println("Got it Pressed");
         this.setVisible(false);
     }
 

@@ -30,7 +30,7 @@ public class copyActionListener implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Copy");
+        System.out.println("Copy (File Menu) Pressed");
         box = new CopyRename_DialogBox(app, true);
         box.addOkayListener(new okayActionListener());
         box.addCancelListener(new cancelActionListener());
@@ -57,13 +57,13 @@ public class copyActionListener implements ActionListener {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("You Pressed Okay");
+            System.out.println("Ok Pressed");
             newDirectory = box.getToField();
-            System.out.println("To: " + newDirectory);
             File copyFile = new File(currentDirectory + File.separator + oldName);
             File newFile = new File(newDirectory);
             try {
                 Files.copy(copyFile.toPath(), newFile.toPath());
+                System.out.println("Copied to: " + newFile.toPath());
             } catch (IOException ioException) {
                 System.out.println("Not able to copy");
             }

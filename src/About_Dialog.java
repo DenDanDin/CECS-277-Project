@@ -88,6 +88,7 @@ public class About_Dialog extends javax.swing.JDialog {
 	*/
     private void okayButtonActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
+        System.out.println("Ok Pressed");
         this.setVisible(false);
     }
 

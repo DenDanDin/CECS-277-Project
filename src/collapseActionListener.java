@@ -25,7 +25,7 @@ public class collapseActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(app.frame.isSelected() == true) {
-            System.out.println("Collapse");
+            System.out.println("Collapse Branch Pressed");
             int row = app.frame.left.dirtree.getLeadSelectionRow();
             app.frame.left.dirtree.collapseRow(row);
         }

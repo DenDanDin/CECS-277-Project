@@ -25,13 +25,13 @@ public class pasteActionListener implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("paste");
+        System.out.println("Paste (PopUp) Pressed");
         String dir = app.frame.title;
         File paste = new File(dir + File.separator + app.copyFile.getName());
-        System.out.println("PASTE: " + paste.getAbsolutePath());
         try{
             Files.copy(app.copyFile.toPath(), paste.toPath());
             app.frame.right.showFileDetails();
+            System.out.println("copyFile pasted to: " + paste.getAbsolutePath());
             app.copyFile = null;    //reset copyFile.
         } catch(Exception ex){
             System.out.println("Not able to copy");

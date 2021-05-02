@@ -24,6 +24,7 @@ public class cascadeActionListener implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("Cascade Pressed");
         for(int i = a.list_ff.size()-1; i >= 0; i--){   //remove the nonvisible (deleted) windows.
             if(a.list_ff.get(i).isVisible() == false){
                 a.list_ff.remove(i);

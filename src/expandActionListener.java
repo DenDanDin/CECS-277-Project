@@ -26,6 +26,7 @@ public class expandActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(app.frame.isSelected() == true) {
+            System.out.println("Expand Branch Pressed");
             DefaultMutableTreeNode node = (DefaultMutableTreeNode) app.frame.left.nodeSelected;
             TreePath path = new TreePath(node.getPath());
             app.frame.left.dirtree.expandPath(path);

@@ -25,11 +25,11 @@ public class copyPopUpActionListener implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("copy");
+        System.out.println("Copy (PopUp) Pressed");
         int row = app.frame.right.tableOfFiles.getSelectedRow();
         String name = (String) app.frame.right.tableOfFiles.getModel().getValueAt(row, 1);
         MyFileNode file = (MyFileNode) app.frame.left.nodeSelected.getUserObject();
         app.copyFile = new File(file.getFileName() + File.separator + name);
-        System.out.println("COPY: " + app.copyFile.getAbsolutePath());
+        System.out.println("copyFile: " + app.copyFile.getAbsolutePath());
     }
 }

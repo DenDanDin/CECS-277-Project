@@ -23,6 +23,7 @@ public class newActionListener implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("New Pressed");
         File disk = (File) a.combo.getSelectedItem();
         a.currentDrive = disk.getAbsolutePath();
         FileFrame ff = new FileFrame(a);

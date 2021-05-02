@@ -26,12 +26,12 @@ public class deleteActionListener implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Delete");
+        System.out.println("Delete Pressed");
         int row = app.frame.right.tableOfFiles.getSelectedRow();
         String name = (String) app.frame.right.tableOfFiles.getModel().getValueAt(row, 1);
         File deleteFile = new File(app.frame.title + File.separator + name);
         deleting = new JOptionPane();
-        int choice = JOptionPane.showConfirmDialog(null, "Delete " + deleteFile.getAbsolutePath(), "Deleting!!", JOptionPane.YES_NO_OPTION);
+        int choice = JOptionPane.showConfirmDialog(app, "Delete " + deleteFile.getAbsolutePath(), "Deleting!!", JOptionPane.YES_NO_OPTION);
         if(choice == JOptionPane.YES_OPTION){
             System.out.println("Deleting File");
             app.frame.right.model.removeRow(row);

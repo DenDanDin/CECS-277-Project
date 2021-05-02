@@ -139,7 +139,6 @@ public class FileFrame extends JInternalFrame {
             title = mfn.getFileName();
             a.pasteDir = mfn.getFileName();
             frame.setTitle(title);
-            System.out.println(mfn.toString() + "; isDirectory(): " + mfn.isDirectory() + "; isSub(): " + mfn.hasSubDirectory() + "; Class: " + mfn.getClass());
         }
 
 
@@ -175,11 +174,11 @@ public class FileFrame extends JInternalFrame {
          */
         @Override
         public void internalFrameActivated(InternalFrameEvent e) {
-            System.out.println("Activation");
             a.frame = FileFrame.this;
-            System.out.println(a.frame.title);
+            System.out.println("Frame Activated: " + a.frame.title);
             MyFileNode node = (MyFileNode) nodeSelected.getUserObject();
             File current = node.getFile();
+            System.out.println("Resetting Statusbar");
             a.resetStatus(current);
         }
 
@@ -204,7 +203,7 @@ public class FileFrame extends JInternalFrame {
                 List<Object> result;
                 //if DnD is between FileFrames.
                 if(evt.getTransferable().isDataFlavorSupported(DataFlavor.stringFlavor)){
-
+                    System.out.println("Dropped File from another FileFrame");
                     String temp = (String)evt.getTransferable().getTransferData(DataFlavor.stringFlavor);
                     String[] nextRow = temp.split("\\n");
                     String[] rowComponents;
@@ -234,9 +233,9 @@ public class FileFrame extends JInternalFrame {
                 //DnD is from an external source (a desktop).
                 else {
                     result = (List) evt.getTransferable().getTransferData(DataFlavor.javaFileListFlavor);
+                    System.out.println("Dropped File from External Source");
                     for (Object o : result) {
                         File fileAdded = (File) o;
-                        System.out.println("fileAdded: " + fileAdded.getAbsolutePath());
                         File destination = new File(fileAdded.getAbsolutePath());
                         Files.copy(fileAdded.toPath(), destination.toPath());
                         MyFileNode mfn = (MyFileNode) left.nodeSelected.getUserObject();

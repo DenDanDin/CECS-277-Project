@@ -25,6 +25,7 @@ public class runActionListener implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
+        System.out.println("Run Pressed");
         Desktop desktop = Desktop.getDesktop();
         int row = app.frame.right.tableOfFiles.getSelectedRow();
         String name = (String) app.frame.right.tableOfFiles.getModel().getValueAt(row, 1);
@@ -32,6 +33,7 @@ public class runActionListener implements ActionListener {
         try{
             File fileToOpen = new File(file.getFileName() + File.separator + name);
             desktop.open(fileToOpen);
+            System.out.println("Run File: " + fileToOpen.getAbsolutePath());
         }catch(Exception ex){
             System.out.println("Not able to open");
         }

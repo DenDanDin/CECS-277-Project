@@ -27,7 +27,7 @@ public class renameActionListener implements ActionListener {
      */
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Rename");
+        System.out.println("Rename Pressed");
         box = new CopyRename_DialogBox(app, true);
         box.addOkayListener(new okayActionListener());
         box.addCancelListener(new cancelActionListener());
@@ -53,14 +53,12 @@ public class renameActionListener implements ActionListener {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("You Pressed Okay");
+            System.out.println("Ok Pressed");
             newName = box.getToField();
             File renameFile = new File(currentDirectory + File.separator + oldName);
-            System.out.println("Old File: " + renameFile.getAbsolutePath());
-            System.out.println("Renamed File: " + newName);
             boolean success = renameFile.renameTo(new File(newName));
             if(success){
-                System.out.println("File Renamed");
+                System.out.println("File Renamed to: " + renameFile.getAbsolutePath());
                 app.frame.right.readFiles();
             }
             else{
@@ -81,7 +79,7 @@ public class renameActionListener implements ActionListener {
          */
         @Override
         public void actionPerformed(ActionEvent e) {
-            System.out.println("You Pressed Cancel");
+            System.out.println("Cancel Pressed");
             box.setVisible(false);
         }
     }
