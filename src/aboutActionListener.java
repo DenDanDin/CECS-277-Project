@@ -14,7 +14,7 @@ public class aboutActionListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         About_Dialog about = new About_Dialog(null, true);
-        about.setBoxTitle("About Pressed");
+        about.setBoxTitle("About");
         about.setVisible(true);
     }
 }
